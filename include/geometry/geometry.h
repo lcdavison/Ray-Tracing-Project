@@ -4,9 +4,11 @@
 #include "maths/maths.h"
 #include "hitresult.h"
 
-class IGeometry 
+class Geometry 
 {
 	public:
-		virtual bool rayhit ( const Ray&, HitResult& ) = 0;
+		Geometry ( ) = default;
+
+		virtual bool rayhit ( const Ray&, HitResult& );
 };
 #endif
