@@ -7,6 +7,9 @@
 #include "geometry/geometry.h"
 #include "geometry/hitresult.h"
 #include "viewer/window.h"
+#include "camera/camera.h"
+
+#include "raytracer/raytracer.h"
 
 class Scene 
 {
@@ -27,10 +30,15 @@ class Scene
 
 		HitResult 			hit_objects ( const Ray& );
 
+		void 				set_tracer ( IRayTracer* );
+
 	private:
 
-		std::vector < Geometry* > 	m_geometry;
+		std::vector < IGeometry* > 	m_geometry;
 		Window* 			m_pwindow = nullptr;
+		
+		IRayTracer*			m_ptracer = nullptr;	//	Determines how the rays will be traced
+		ICamera*			m_pcamera = nullptr;
 
 		//	Lights etc..
 
