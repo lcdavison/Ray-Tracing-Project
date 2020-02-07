@@ -3,12 +3,12 @@
 
 #include "geometry.h"
 
-class Plane : public Geometry
+class Plane : public IGeometry
 {
 	public:
 		Plane ( );
 
-		bool rayhit ( const Ray&, HitResult& ) override;
+		bool rayhit ( const Ray&, HitResult& );
 
 	private:
 

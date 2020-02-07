@@ -4,12 +4,12 @@
 #include "geometry.h"
 #include "maths/maths.h"
 
-class Sphere : public Geometry 
+class Sphere : public IGeometry 
 {
 	public:
 		Sphere ( );
 
-		bool rayhit ( const Ray&, HitResult& ) override;
+		bool rayhit ( const Ray&, HitResult& );
 
 	private:
 
