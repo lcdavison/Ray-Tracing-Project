@@ -19,7 +19,15 @@ Window::~Window ( )
 void Window::update ( )
 {
 	handle_events ( );
-	SDL_RenderPresent ( m_prenderer );
+
+	TimePoint now = std::chrono::high_resolution_clock::now ( );
+	auto elapsed = std::chrono::duration_cast < std::chrono::milliseconds > ( now - m_update_timer );
+
+	if ( elapsed.count ( ) >= 1000 )
+	{
+		m_update_timer = std::chrono::high_resolution_clock::now ( );
+		SDL_RenderPresent ( m_prenderer );
+	}
 }
 
 void Window::create_window ( )
@@ -50,7 +58,7 @@ void Window::handle_events ( )
 		switch ( event.type )
 		{
 			case SDL_QUIT:
-				//	TODO: Post a quit event to an event queue 
+				RTEventManager::push_event ( RT_QUIT );
 				return;
 		}
 	}

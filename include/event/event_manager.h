@@ -10,6 +10,7 @@ class RTEventManager
 	public:
 
 		static void handle_events ( );
+		static void push_event ( RT_EVENT );
 
 	private:
 

@@ -1,13 +1,25 @@
 #include <iostream>
-#include "maths/maths.h"
+#include <chrono>
+
+#include "scene/scene.h"
+#include "event/event_manager.h"
+
+bool _running 	= false;
+bool _render 	= false;
 
 int main ( int argc, char** argv )
 {
-	Vector3 test;
-	
-	std::printf ( "X : %f Y : %f Z : %f\n", test.x, test.y, test.z );
+	Scene scene ( 500, 500 );
 
-	std::cout << "Hello World" << std::endl;
+	_running = true;
+
+	while ( _running )
+	{
+		//	Handle ray tracer events
+		RTEventManager::handle_events ( );
+		
+		scene.update_window ( );
+	}
 
 	return 0;
 }

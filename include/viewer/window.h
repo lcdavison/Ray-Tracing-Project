@@ -2,10 +2,15 @@
 #define WINDOW_H
 
 #include <SDL.h>
+
 #include <iostream>
+#include <chrono>
 #include <vector>
 
 #include "maths/maths.h"
+#include "event/event_manager.h"
+
+typedef std::chrono::time_point < std::chrono::high_resolution_clock > TimePoint;
 
 class Window 
 {
@@ -36,5 +41,7 @@ class Window
 		//	Window dimensions : default 500w x 500h
 		unsigned short 			m_width = 500;
 		unsigned short 			m_height = 500;
+
+		TimePoint 			m_update_timer = std::chrono::high_resolution_clock::now ( );
 };
 #endif
