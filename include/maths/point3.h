@@ -13,7 +13,6 @@ struct Point3
 	Point3 ( );
 	Point3 ( double, double, double );
 	Point3 ( const Point3& ) = default;
-	Point3 ( Point3&& ) = default;
 };
 
 Vector3 operator - ( const Point3&, const Point3& );	//	Get vector between two points

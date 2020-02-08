@@ -11,7 +11,6 @@ class Ray
 		Ray ( );
 		Ray ( const Point3&, const Vector3& );
 		Ray ( const Ray& ) = default;
-		Ray ( Ray&& ) = default;
 
 		Point3 		get_origin ( ) 		const;
 		Vector3 	get_direction ( ) 	const;

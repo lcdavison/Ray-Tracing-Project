@@ -15,7 +15,6 @@ class Vector3
 		Vector3 ( );
 		Vector3 ( double, double, double );
 		Vector3 ( const Vector3& ) = default;
-		Vector3 ( Vector3&& ) = default;
 
 		double 		length ( );
 		void 		normalize ( );
