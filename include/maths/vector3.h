@@ -17,12 +17,12 @@ class Vector3
 		Vector3 ( const Vector3& ) = default;
 		Vector3 ( Vector3&& ) = default;
 
-		double length ( );
-		void normalize ( );
+		double 		length ( );
+		void 		normalize ( );
 
 	private:
 
-		double m_length;
+		double 		m_length;
 };
 
 Vector3 operator + ( const Vector3&, const Vector3& );
