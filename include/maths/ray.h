@@ -13,10 +13,10 @@ class Ray
 		Ray ( const Ray& ) = default;
 		Ray ( Ray&& ) = default;
 
-		Point3 		get_origin ( );
-		Vector3 	get_direction ( );
+		Point3 		get_origin ( ) 		const;
+		Vector3 	get_direction ( ) 	const;
 
-		Point3 		get_point ( double );	//	Returns a point along the ray
+		Point3 		get_point ( double ) 	const;	//	Returns a point along the ray
 
 	private:
 
