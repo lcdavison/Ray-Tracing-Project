@@ -1,6 +1,8 @@
 #ifndef HITRESULT_H
 #define HITRESULT_H
 
+#include <limits>
+
 #include "maths/maths.h"
 
 /*
@@ -10,7 +12,7 @@
 struct HitResult 
 {
 	bool 		m_hit = false;		//	Has ray hit something
-	double 		m_distance = 0.0;	//	Distance of hit point
+	double 		m_distance;		//	Distance of hit point
 	Point3		m_hitpoint;		//	Hit point in world coordinates
 	//	Ray
 	//	Material
