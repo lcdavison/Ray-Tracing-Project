@@ -7,12 +7,10 @@ class PinholeCamera : public ICamera
 {
 	public:
 		PinholeCamera ( );
-		PinholeCamera ( const Vector3&, double );
+		PinholeCamera ( const Point3&, double );
 
-		void 		constuct_basis ( const Point3&, const Vector3& );	//	Compute orthonormal basis
+		void 		construct_basis ( const Point3&, const Vector3& );
 		Ray 		construct_ray ( double, double );
-
-		Point3		get_position ( );
 
 	private:
 
