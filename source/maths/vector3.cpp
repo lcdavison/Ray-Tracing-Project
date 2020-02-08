@@ -45,7 +45,7 @@ Vector3 operator * ( double s, const Vector3& v )
 
 double dot ( const Vector3& l, const Vector3& r )
 {
-	return l.x * r.x + l.y + r.y + l.z + r.z;
+	return l.x * r.x + l.y * r.y + l.z * r.z;
 }
 
 Vector3 cross ( const Vector3& l, const Vector3& r )
