@@ -47,6 +47,8 @@ void Window::create_window ( )
 		std::cout << "Failed to create SDL renderer" << std::endl;
 		//	Do something
 	}
+
+	m_colourbuffer.resize ( m_width * m_height, ColourRGB ( 0.0f, 0.0f, 0.0f ) );
 }
 
 void Window::handle_events ( ) 
@@ -67,6 +69,11 @@ void Window::handle_events ( )
 void Window::set_pixel ( unsigned short p_x, unsigned short p_y, const ColourRGB& p_colour )
 {
 	m_colourbuffer.at ( p_y * m_width + p_x ) = p_colour;
+
+	unsigned int colour_int = p_colour.int_format ( );
+
+	SDL_SetRenderDrawColor ( m_prenderer, ( colour_int & 0xFF0000 ) >> 16, ( colour_int & 0x00FF00 ) >> 8, ( colour_int & 0x0000FF ), 255 );
+	SDL_RenderDrawPoint ( m_prenderer, p_x, p_y );
 }
 
 unsigned short Window::get_width ( )
