@@ -4,8 +4,10 @@
 #include <vector>
 
 #include "maths/maths.h"
+
 #include "geometry/geometry.h"
-#include "geometry/hitresult.h"
+#include "geometry/plane.h"
+
 #include "viewer/window.h"
 #include "camera/camera.h"
 
@@ -24,21 +26,21 @@ class Scene
 
 		~Scene ( );
 
-		void 				build_scene ( );
-		void 				render ( );
-		void				update_window ( );
+		void 					build_scene ( );
+		void 					render ( );
+		void					update_window ( );
 
-		HitResult 			hit_objects ( const Ray& );
-
-		void 				set_tracer ( IRayTracer* );
+		void 					set_tracer ( IRayTracer* );
+		void					set_camera ( ICamera* );
+		const std::vector < IGeometry* >&	get_geometry ( );
 
 	private:
 
-		std::vector < IGeometry* > 	m_geometry;
-		Window* 			m_pwindow = nullptr;
+		std::vector < IGeometry* > 		m_geometry;
+		Window* 				m_pwindow = nullptr;
 		
-		IRayTracer*			m_ptracer = nullptr;	//	Determines how the rays will be traced
-		ICamera*			m_pcamera = nullptr;
+		IRayTracer*				m_ptracer = nullptr;	//	Determines how the rays will be traced
+		ICamera*				m_pcamera = nullptr;
 
 		//	Lights etc..
 
