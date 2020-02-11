@@ -14,7 +14,7 @@ class DirectTracer : public IRayTracer
 		DirectTracer ( ) = default;
 		DirectTracer ( Scene* );
 
-		void trace_ray ( const Ray&, HitResult& );
+		ColourRGB trace_ray ( const Ray& );
 
 	private:
 
