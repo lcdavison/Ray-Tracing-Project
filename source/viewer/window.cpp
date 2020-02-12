@@ -73,7 +73,7 @@ void Window::set_pixel ( unsigned short p_x, unsigned short p_y, const ColourRGB
 	unsigned int colour_int = p_colour.int_format ( );
 
 	SDL_SetRenderDrawColor ( m_prenderer, ( colour_int & 0xFF0000 ) >> 16, ( colour_int & 0x00FF00 ) >> 8, ( colour_int & 0x0000FF ), 255 );
-	SDL_RenderDrawPoint ( m_prenderer, p_x, p_y );
+	SDL_RenderDrawPoint ( m_prenderer, p_x, ( m_height - 1 ) - p_y );
 }
 
 unsigned short Window::get_width ( )
