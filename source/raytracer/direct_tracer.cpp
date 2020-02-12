@@ -1,7 +1,5 @@
 #include "raytracer/direct_tracer.h"
 
-#include <iostream>
-
 DirectTracer::DirectTracer ( Scene* p_scene ) : m_pscene ( p_scene )
 {
 }
@@ -25,7 +23,11 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 
 	if ( closest_result.m_hit )
 	{
-		return ColourRGB ( 0.0f, 1.0f, 0.0f );
+		closest_result.m_hitpoint = p_ray.get_point ( closest_result.m_distance );
+		closest_result.m_pambient_light = m_pscene->get_ambient_light ( );
+		closest_result.m_plights = &( m_pscene->get_lights ( ) );
+
+		return closest_result.m_pmaterial->shade ( closest_result );
 	}
 
 	return ColourRGB ( 0.0f, 0.0f, 0.0f );
