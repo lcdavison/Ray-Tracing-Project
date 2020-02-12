@@ -8,12 +8,13 @@ class Sphere : public IGeometry
 {
 	public:
 		Sphere ( );
+		Sphere ( const Point3&, double );
 
-		bool rayhit ( const Ray&, HitResult& );
+		bool 		rayhit ( const Ray&, HitResult& );
 
 	private:
 
 		Point3		m_center;
-		float		m_radius;
+		double		m_radius;
 };
 #endif
