@@ -43,3 +43,13 @@ ColourRGB operator * ( const ColourRGB& l, const ColourRGB& r )
 {
 	return ColourRGB ( l.get_red ( ) * r.get_red ( ), l.get_green ( ) * r.get_green ( ), l.get_blue ( ) * r.get_blue ( ) );
 }
+
+ColourRGB operator * ( const ColourRGB& c, float s )
+{
+	return ColourRGB ( c.get_red ( ) * s, c.get_green ( ) * s, c.get_blue ( ) * s );
+}
+
+ColourRGB operator * ( float s, const ColourRGB& c )
+{
+	return ColourRGB ( c.get_red ( ) * s, c.get_green ( ) * s, c.get_blue ( ) * s );
+}

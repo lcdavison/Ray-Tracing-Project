@@ -24,4 +24,6 @@ class ColourRGB
 //	Define operators for colour
 ColourRGB operator + ( const ColourRGB&, const ColourRGB& );
 ColourRGB operator * ( const ColourRGB&, const ColourRGB& );
+ColourRGB operator * ( const ColourRGB&, float );
+ColourRGB operator * ( float, const ColourRGB& );
 #endif
