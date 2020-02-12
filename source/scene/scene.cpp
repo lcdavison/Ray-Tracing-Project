@@ -13,18 +13,21 @@ Scene::Scene ( unsigned short p_width, unsigned short p_height )
 Scene::~Scene ( )
 {
 	//	Clear all geometry
+	for ( IGeometry* geometry : m_geometry )
+	{
+		delete geometry;
+	}
 	
 	if ( m_pwindow )
 	{
 		delete m_pwindow;
+		m_pwindow = nullptr;
 	}
 }
 
 void Scene::build_scene ( )
 {
-	//	Create geometry, lights, materials, etc..
-	Plane* plane = new Plane ( Point3 ( -10.0, 0.0, 0.0 ), Vector3 ( 1.0, 0.0, 0.0 ) );
-	m_geometry.push_back ( plane );
+	m_pambient_light = new AmbientLight ( );
 }
 
 void Scene::render ( )
@@ -50,6 +53,11 @@ void Scene::update_window ( )
 	m_pwindow->update ( );
 }
 
+void Scene::add_geometry ( IGeometry* p_geometry )
+{
+	m_geometry.push_back ( p_geometry );
+}
+
 void Scene::set_tracer ( IRayTracer* p_tracer )
 {
 	m_ptracer = p_tracer;
@@ -60,7 +68,17 @@ void Scene::set_camera ( ICamera* p_camera )
 	m_pcamera = p_camera;
 }
 
-const std::vector < IGeometry* >& Scene::get_geometry ( )
+AmbientLight* Scene::get_ambient_light ( )
+{
+	return m_pambient_light;
+}
+
+std::vector < ILight* >& Scene::get_lights ( )
+{
+	return m_lights;
+}
+
+std::vector < IGeometry* >& Scene::get_geometry ( )
 {
 	return m_geometry;
 }
