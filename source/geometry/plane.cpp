@@ -14,7 +14,14 @@ bool Plane::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	if ( distance > 0.0 )
 	{
-		p_hitresult.m_hit = true;
-		p_hitresult.m_distance = distance;
+		p_hitresult.m_hit 	= true;
+		p_hitresult.m_distance 	= distance;
+		p_hitresult.m_normal 	= this->m_normal;
+		p_hitresult.m_pmaterial = this->m_pmaterial;
 	}
+}
+
+void Plane::set_material ( IMaterial* p_material ) 
+{
+	m_pmaterial = p_material;
 }

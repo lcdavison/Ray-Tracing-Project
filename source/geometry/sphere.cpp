@@ -22,29 +22,34 @@ bool Sphere::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	double sqrt 		= std::sqrt ( discriminant );
 	double denominator 	= 2.0 * dir_sqrd;
-	double t 		= -v_dot_dir + sqrt / denominator;	//	Quadratic formula 
+	double distance 	= ( -v_dot_dir - sqrt ) / denominator;	//	Quadratic formula - shorter distance 
 
 	double inv_radius = 1.0 / m_radius;
 
-	if ( t > 0.0 )
+	if ( distance > 0.0 )
 	{
 		p_hitresult.m_hit = true;
-		p_hitresult.m_distance = t;
-		p_hitresult.m_normal = ( center_to_origin + t * p_ray.get_direction ( ) ) * inv_radius;
+		p_hitresult.m_distance = distance;
+		p_hitresult.m_normal = ( center_to_origin + distance * p_ray.get_direction ( ) ) * inv_radius;
 		p_hitresult.m_pmaterial = this->m_pmaterial;
 		return true;
 	}
 
-	t = -v_dot_dir - sqrt / denominator;
+	distance = ( -v_dot_dir + sqrt ) / denominator;	//	Quadratic formula - further distance
 
-	if ( t > 0.0 )
+	if ( distance > 0.0 )
 	{
 		p_hitresult.m_hit = true;
-		p_hitresult.m_distance = t;
-		p_hitresult.m_normal = ( center_to_origin + t * p_ray.get_direction ( ) ) * inv_radius;
+		p_hitresult.m_distance = distance;
+		p_hitresult.m_normal = ( center_to_origin + distance * p_ray.get_direction ( ) ) * inv_radius;
 		p_hitresult.m_pmaterial = this->m_pmaterial;
 		return true;
 	}
 
 	return false;
+}
+
+void Sphere::set_material ( IMaterial* p_material ) 
+{
+	m_pmaterial = p_material;
 }
