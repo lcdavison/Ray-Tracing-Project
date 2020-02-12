@@ -4,7 +4,6 @@
 #include <limits>
 
 #include "maths/maths.h"
-#include "geometry/hitresult.h"
 
 class IRayTracer 
 {

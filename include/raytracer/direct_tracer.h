@@ -2,6 +2,7 @@
 #define DIRECT_TRACER_H
 
 #include "raytracer.h"
+#include "geometry/hitresult.h"
 #include "scene/scene.h"
 
 /*
