@@ -2,7 +2,7 @@
 #define SPHERE_H
 
 #include "geometry.h"
-#include "maths/maths.h"
+#include "material/material.h"
 
 class Sphere : public IGeometry 
 {
@@ -12,7 +12,11 @@ class Sphere : public IGeometry
 
 		bool 		rayhit ( const Ray&, HitResult& );
 
+		void		set_material ( IMaterial* p_material );
+
 	private:
+
+		IMaterial*	m_pmaterial = nullptr;
 
 		Point3		m_center;
 		double		m_radius;
