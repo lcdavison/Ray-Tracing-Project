@@ -7,7 +7,7 @@ ColourRGB AmbientLight::radiance ( )
 	return m_coeff * m_colour;
 }
 
-Vector3 AmbientLight::get_direction ( )
+Vector3 AmbientLight::get_direction ( const Point3& m_hitpoint )
 {
 	return Vector3 ( 0.0, 0.0, 0.0 );
 }
