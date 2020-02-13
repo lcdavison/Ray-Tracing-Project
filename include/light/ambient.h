@@ -10,7 +10,7 @@ class AmbientLight : public ILight
 		AmbientLight ( );
 
 		ColourRGB 	radiance ( );
-		Vector3 	get_direction ( );
+		Vector3 	get_direction ( const Point3& );
 
 	private:
 

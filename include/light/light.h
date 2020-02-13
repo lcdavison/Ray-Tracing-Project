@@ -8,9 +8,9 @@ class ILight
 	public:
 
 		virtual ColourRGB 	radiance 	( ) = 0;
-		virtual Vector3 	get_direction 	( ) = 0;
+		virtual Vector3 	get_direction 	( const Point3& ) = 0;
 
-	private:
+	protected:
 
 		bool 			m_shadows = false;
 };
