@@ -58,6 +58,11 @@ void Scene::add_geometry ( IGeometry* p_geometry )
 	m_geometry.push_back ( p_geometry );
 }
 
+void Scene::add_light ( ILight* p_light )
+{
+	m_lights.push_back ( p_light );
+}
+
 void Scene::set_tracer ( IRayTracer* p_tracer )
 {
 	m_ptracer = p_tracer;

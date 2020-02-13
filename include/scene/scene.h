@@ -33,7 +33,8 @@ class Scene
 		void 					render ( );
 		void					update_window ( );
 
-		void 					add_geometry ( IGeometry* );
+		void 					add_geometry 	( IGeometry* );
+		void					add_light	( ILight* );
 
 		void 					set_tracer ( IRayTracer* );
 		void					set_camera ( ICamera* );
