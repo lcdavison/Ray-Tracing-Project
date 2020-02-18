@@ -13,7 +13,7 @@ class Matte : public IMaterial
 
 		~Matte ( );
 
-		ColourRGB	shade ( const HitResult& );
+		ColourRGB	shade ( const HitResult&, const Ray& );
 
 		void 		set_ambient_coeff ( float );
 		void 		set_diffuse_coeff ( float );

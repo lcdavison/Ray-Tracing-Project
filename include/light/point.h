@@ -10,8 +10,11 @@ class PointLight : public ILight
 		PointLight ( );
 		PointLight ( const Point3&, const ColourRGB&, float );
 
-		Vector3 	get_direction ( const Point3& );
-		ColourRGB 	radiance ( );
+		ColourRGB 	radiance 	( );
+
+		bool		in_shadow 	( const Ray&, const HitResult& );
+
+		Vector3 	get_direction 	( const Point3& );
 
 	private:
 

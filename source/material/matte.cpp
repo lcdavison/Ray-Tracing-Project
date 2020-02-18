@@ -19,7 +19,7 @@ Matte::~Matte ( )
 	m_diffuse_brdf = nullptr;
 }
 
-ColourRGB Matte::shade ( const HitResult& p_hitdata )
+ColourRGB Matte::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 {
 	ColourRGB radiance = m_ambient_brdf->reflectance ( p_hitdata, Vector3 ( 0.0, 0.0, 0.0 ) ) * p_hitdata.m_pambient_light->radiance ( );
 
@@ -29,7 +29,18 @@ ColourRGB Matte::shade ( const HitResult& p_hitdata )
 
 		if ( normal_dot_dir > 0.0 )
 		{
-			radiance = radiance + ( m_diffuse_brdf->function ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), Vector3 ( 0.0, 0.0, 0.0 ) ) * light->radiance ( ) * normal_dot_dir );
+			bool shadow = false;
+			
+			if ( light->casts_shadows ( ) )
+			{
+				Ray ray ( p_hitdata.m_hitpoint, light->get_direction ( p_hitdata.m_hitpoint ) );
+				shadow = light->in_shadow ( ray, p_hitdata );
+			}
+
+			if ( !shadow )
+			{
+				radiance = radiance + ( m_diffuse_brdf->function ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), Vector3 ( 0.0, 0.0, 0.0 ) ) * light->radiance ( ) * normal_dot_dir );
+			}
 		}
 	}
 

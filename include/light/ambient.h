@@ -3,14 +3,19 @@
 
 #include "light.h"
 
+struct HitResult;
+
 class AmbientLight : public ILight 
 {
 	public:
 		
 		AmbientLight ( );
 
-		ColourRGB 	radiance ( );
-		Vector3 	get_direction ( const Point3& );
+		ColourRGB 	radiance 	( );
+
+		bool		in_shadow 	( const Ray&, const HitResult& );
+
+		Vector3 	get_direction 	( const Point3& );
 
 	private:
 

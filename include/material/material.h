@@ -10,6 +10,6 @@ class IMaterial
 {
 	public:
 
-		virtual ColourRGB shade ( const HitResult& ) = 0;
+		virtual ColourRGB shade ( const HitResult&, const Ray& ) = 0;
 };
 #endif
