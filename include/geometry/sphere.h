@@ -10,15 +10,18 @@ class Sphere : public IGeometry
 		Sphere ( );
 		Sphere ( const Point3&, double );
 
-		bool 		rayhit ( const Ray&, HitResult& );
+		void 			rayhit ( const Ray&, HitResult& );
+		bool			shadow_rayhit ( const Ray&, double& );
 
-		void		set_material ( IMaterial* p_material );
+		void			set_material ( IMaterial* p_material );
 
 	private:
 
-		IMaterial*	m_pmaterial = nullptr;
+		IMaterial*		m_pmaterial = nullptr;
 
-		Point3		m_center;
-		double		m_radius;
+		Point3			m_center;
+		double			m_radius;
+
+		static const double 	m_EPSILON;
 };
 #endif

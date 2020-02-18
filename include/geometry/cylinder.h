@@ -14,16 +14,21 @@ class Cylinder : public IGeometry
 		Cylinder ( );
 		Cylinder ( const Point3&, double, double );
 
-		bool 		rayhit ( const Ray&, HitResult& );
+		void			rayhit ( const Ray&, HitResult& );
+		bool			shadow_rayhit ( const Ray&, double& );
 
-		void 		set_material ( IMaterial* );
+		void 			set_material ( IMaterial* );
 
 	private:
 
-		IMaterial* 	m_material_ptr = nullptr;
+		void 			test_caps ( const Ray&, HitResult& );
 
-		Point3 		m_center;
-		double 		m_radius;
-		double 		m_height;
+		IMaterial* 		m_material_ptr = nullptr;
+
+		Point3 			m_center;
+		double 			m_radius;
+		double 			m_height;
+
+		static const double 	m_EPSILON;
 };
 #endif
