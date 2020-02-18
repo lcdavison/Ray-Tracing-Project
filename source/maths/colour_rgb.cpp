@@ -25,6 +25,13 @@ float ColourRGB::get_blue ( ) const
 
 unsigned int ColourRGB::int_format ( ) const
 {
+	//	Perform Tone Mapping
+	float max_value = std::max ( m_red, std::max ( m_green, m_blue ) );
+
+	m_red 	/= max_value;
+	m_green /= max_value;
+	m_blue  /= max_value;
+
 	unsigned int final_colour = 0;
 
 	final_colour |= ( ( unsigned int ) ( m_red * 255 ) ) << 16;
