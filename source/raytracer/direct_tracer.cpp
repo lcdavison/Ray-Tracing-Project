@@ -23,12 +23,13 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 
 	if ( closest_result.m_hit )
 	{
-		closest_result.m_hitpoint = p_ray.get_point ( closest_result.m_distance );
+		closest_result.m_hitpoint 	= p_ray.get_point ( closest_result.m_distance );
 		closest_result.m_pambient_light = m_pscene->get_ambient_light ( );
-		closest_result.m_plights = &( m_pscene->get_lights ( ) );
+		closest_result.m_plights 	= &( m_pscene->get_lights ( ) );
+		closest_result.m_pgeometry	= &( m_pscene->get_geometry ( ) );
 
-		return closest_result.m_pmaterial->shade ( closest_result );
+		return closest_result.m_pmaterial->shade ( closest_result, p_ray );
 	}
 
-	return ColourRGB ( 0.0f, 0.0f, 0.0f );
+	return ColourRGB ( 0.2f, 0.2f, 0.2f );	//	Change this to return a background colour instead
 }
