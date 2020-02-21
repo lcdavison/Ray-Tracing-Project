@@ -4,6 +4,7 @@
 #include "material.h"
 #include "brdf/lambertian.h"
 #include "brdf/blinn-phong_specular.h"
+#include "brdf/perfect_specular.h"
 
 class BlinnPhong : public IMaterial
 {
@@ -21,5 +22,21 @@ class BlinnPhong : public IMaterial
 		Lambertian* 			m_ambient_brdf 	= nullptr;
 		Lambertian* 			m_diffuse_brdf 	= nullptr;
 		BlinnPhongSpecular* 		m_specular_brdf = nullptr;
+};
+
+class BlinnPhongReflective : public BlinnPhong 
+{
+	public:
+
+		BlinnPhongReflective ( );
+		BlinnPhongReflective ( const ColourRGB&, float, float, float, float, const ColourRGB&, float );
+
+		~BlinnPhongReflective ( );
+
+		ColourRGB 			shade ( const HitResult&, const Ray& );
+
+	private:
+
+		PerfectSpecular*	m_perfect_specular_brdf = nullptr;
 };
 #endif

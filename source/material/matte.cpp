@@ -39,7 +39,7 @@ ColourRGB Matte::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 
 			if ( !shadow )
 			{
-				radiance = radiance + ( m_diffuse_brdf->function ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), Vector3 ( 0.0, 0.0, 0.0 ) ) * light->radiance ( ) * normal_dot_dir );
+				radiance = radiance + ( m_diffuse_brdf->function ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), Vector3 ( 0.0, 0.0, 0.0 ) ) * light->radiance ( ) * std::max ( normal_dot_dir, 0.0 ) );
 			}
 		}
 	}
