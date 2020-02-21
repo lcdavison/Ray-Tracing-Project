@@ -12,6 +12,8 @@
 
 typedef std::chrono::time_point < std::chrono::high_resolution_clock > TimePoint;
 
+//	TODO: Use an SDL_Surface instead and manually blit the surface to the screen
+
 class Window 
 {
 	public:
@@ -20,12 +22,14 @@ class Window
 
 		~Window ( );
 
-		void 			update ( );
+		void 					update ( );
+		void					present ( );
 
-		void 			set_pixel ( unsigned short, unsigned short, const ColourRGB& );
+		void 					set_pixel ( unsigned short, unsigned short, const ColourRGB& );
 
-		unsigned short 		get_width ( );
-		unsigned short 		get_height ( );
+		unsigned short 				get_width ( );
+		unsigned short 				get_height ( );
+		const std::vector < ColourRGB >&	get_colourbuffer ( );
 
 	private:
 
@@ -34,7 +38,7 @@ class Window
 		void handle_events ( );
 
 		SDL_Window* 			m_pwindow = nullptr;
-		SDL_Renderer*			m_prenderer = nullptr;
+		SDL_Surface*			m_surface_ptr = nullptr;
 
 		std::vector < ColourRGB > 	m_colourbuffer;		//	Stores colours to later be written to an image file
 

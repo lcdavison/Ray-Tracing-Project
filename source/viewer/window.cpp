@@ -13,21 +13,25 @@ Window::Window ( unsigned short p_width, unsigned short p_height ) : m_width ( p
 Window::~Window ( ) 
 {
 	SDL_DestroyWindow ( m_pwindow );
-	SDL_DestroyRenderer ( m_prenderer );
 }
 
 void Window::update ( )
 {
 	handle_events ( );
 
-	TimePoint now = std::chrono::high_resolution_clock::now ( );
+	/*TimePoint now = std::chrono::high_resolution_clock::now ( );
 	auto elapsed = std::chrono::duration_cast < std::chrono::milliseconds > ( now - m_update_timer );
 
 	if ( elapsed.count ( ) >= 1000 )
 	{
 		m_update_timer = std::chrono::high_resolution_clock::now ( );
 		SDL_RenderPresent ( m_prenderer );
-	}
+	}*/
+}
+
+void Window::present ( )
+{
+	SDL_UpdateWindowSurface ( m_pwindow );
 }
 
 void Window::create_window ( )
@@ -40,13 +44,7 @@ void Window::create_window ( )
 		//	Do something
 	}
 
-	m_prenderer = SDL_CreateRenderer ( m_pwindow, -1, SDL_RENDERER_ACCELERATED );
-
-	if ( !m_prenderer )
-	{
-		std::cout << "Failed to create SDL renderer" << std::endl;
-		//	Do something
-	}
+	m_surface_ptr = SDL_GetWindowSurface ( m_pwindow );
 
 	m_colourbuffer.resize ( m_width * m_height, ColourRGB ( 0.0f, 0.0f, 0.0f ) );
 }
@@ -72,8 +70,8 @@ void Window::set_pixel ( unsigned short p_x, unsigned short p_y, const ColourRGB
 
 	unsigned int colour_int = p_colour.int_format ( );
 
-	SDL_SetRenderDrawColor ( m_prenderer, ( colour_int & 0xFF0000 ) >> 16, ( colour_int & 0x00FF00 ) >> 8, ( colour_int & 0x0000FF ), 255 );
-	SDL_RenderDrawPoint ( m_prenderer, p_x, ( m_height - 1 ) - p_y );
+	unsigned int* pixel = ( unsigned int * ) ( ( unsigned char* ) ( m_surface_ptr->pixels ) + ( ( ( m_height ) - p_y ) * m_surface_ptr->pitch + p_x * m_surface_ptr->format->BytesPerPixel ) );
+	*pixel = ( 255 << 24 ) | colour_int;
 }
 
 unsigned short Window::get_width ( )
@@ -84,4 +82,9 @@ unsigned short Window::get_width ( )
 unsigned short Window::get_height ( )
 {
 	return m_height;
+}
+
+const std::vector < ColourRGB >& Window::get_colourbuffer ( )
+{
+	return m_colourbuffer;
 }
