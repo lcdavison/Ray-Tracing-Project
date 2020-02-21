@@ -18,28 +18,36 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	double discriminant 	= v_dot_dir * v_dot_dir - 4.0 * dir_sqrd * v_sqr;
 
+	p_hitresult.m_distance 	= std::numeric_limits < double >::max ( );
+
 	//	Doesn't hit sides of cylinder, so just test caps
 	if ( discriminant < 0.0 )
 	{
-		test_caps ( p_ray, p_hitresult );
+		HitResult cap_result;
+		cap_result.m_distance = p_hitresult.m_distance;
+		test_caps ( p_ray, cap_result );
+
+		if ( cap_result.m_distance < p_hitresult.m_distance )
+			p_hitresult = cap_result;
 
 		return;
 	}
 
 	double sqrt 		= std::sqrt ( discriminant );
 	double denominator 	= 2.0 * dir_sqrd;
-	double distance 	= ( -v_dot_dir - sqrt ) / denominator;
 
 	double half_height 	= m_height * 0.5;
 	double inv_radius 	= 1.0 / m_radius;
 
-	if ( distance > m_EPSILON )
+	double distance 	= ( -v_dot_dir - sqrt ) / denominator;
+
+	if ( distance > m_EPSILON && distance < p_hitresult.m_distance )
 	{
 		if ( p_ray.get_point ( distance ).y >= m_center.y - half_height && p_ray.get_point ( distance ).y <= m_center.y + half_height )
 		{
-			p_hitresult.m_hit = true;
-			p_hitresult.m_distance = distance;
-			p_hitresult.m_normal = Vector3 ( cx_to_ox + distance * p_ray.get_direction ( ).x, 0.0, cz_to_oz + distance * p_ray.get_direction ( ).z ) * inv_radius;
+			p_hitresult.m_hit 	= true;
+			p_hitresult.m_distance 	= distance;
+			p_hitresult.m_normal 	= Vector3 ( cx_to_ox + distance * p_ray.get_direction ( ).x, 0.0, cz_to_oz + distance * p_ray.get_direction ( ).z ) * inv_radius;
 
 			if ( dot ( p_hitresult.m_normal, -1.0 * p_ray.get_direction ( ) ) < 0.0 )
 			{
@@ -56,9 +64,9 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 	{
 		if ( p_ray.get_point ( distance ).y >= m_center.y - half_height && p_ray.get_point ( distance ).y <= m_center.y + half_height )
 		{
-			p_hitresult.m_hit = true;
-			p_hitresult.m_distance = distance;
-			p_hitresult.m_normal = Vector3 ( cx_to_ox + distance * p_ray.get_direction ( ).x, 0.0, cz_to_oz + distance * p_ray.get_direction ( ).z ) * inv_radius;
+			p_hitresult.m_hit 	= true;
+			p_hitresult.m_distance 	= distance;
+			p_hitresult.m_normal 	= Vector3 ( cx_to_ox + distance * p_ray.get_direction ( ).x, 0.0, cz_to_oz + distance * p_ray.get_direction ( ).z ) * inv_radius;
 
 			if ( dot ( p_hitresult.m_normal, -1.0 * p_ray.get_direction ( ) ) < 0.0 )
 			{
@@ -69,18 +77,22 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 		}
 	}
 
-	test_caps ( p_ray, p_hitresult );
+	HitResult cap_result;
+	cap_result.m_distance = p_hitresult.m_distance;
+	test_caps ( p_ray, cap_result );
 
-	return;
+	if ( cap_result.m_distance < p_hitresult.m_distance )
+		p_hitresult = cap_result;
 }
 
 void Cylinder::test_caps ( const Ray& p_ray, HitResult& p_hitresult )
 {
-	//	Check top cap
 	double 	half_height 	= m_height * 0.5;
+
+	//	Check top cap
 	Vector3 plane_normal 	= Vector3 ( 0.0, 1.0, 0.0 );
 	Point3 	cap_center 	= Point3 ( m_center.x, m_center.y + half_height, m_center.z );
-	double 	distance 	= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
+	double distance 	= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
 
 	if ( distance > m_EPSILON && distance < p_hitresult.m_distance )
 	{
@@ -88,9 +100,9 @@ void Cylinder::test_caps ( const Ray& p_ray, HitResult& p_hitresult )
 
 		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
 		{
-			p_hitresult.m_hit = true;
-			p_hitresult.m_distance = distance;
-			p_hitresult.m_normal = plane_normal;
+			p_hitresult.m_hit 	= true;
+			p_hitresult.m_distance 	= distance;
+			p_hitresult.m_normal 	= plane_normal;
 			p_hitresult.m_pmaterial = this->m_material_ptr;	
 		}
 	}
@@ -106,12 +118,12 @@ void Cylinder::test_caps ( const Ray& p_ray, HitResult& p_hitresult )
 
 		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
 		{
-			p_hitresult.m_hit = true;
-			p_hitresult.m_distance = distance;
-			p_hitresult.m_normal = plane_normal;
-			p_hitresult.m_pmaterial = this->m_material_ptr;	
+			p_hitresult.m_hit 	= true;
+			p_hitresult.m_distance 	= distance;
+			p_hitresult.m_normal 	= plane_normal;
+			p_hitresult.m_pmaterial	= this->m_material_ptr;
 		}
-	}	
+	}
 }
 
 bool Cylinder::shadow_rayhit ( const Ray& p_ray, double& p_distance )
