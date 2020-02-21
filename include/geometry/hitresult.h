@@ -25,6 +25,7 @@ struct HitResult
 	double 				m_distance;		//	Distance of hit point
 	Point3				m_hitpoint;		//	Hit point in world coordinates
 	Vector3				m_normal;		//	Normal at hit point
+	ColourRGB			m_reflection_radiance = ColourRGB ( 0.0f, 0.0f, 0.0f );	//	Radiance of reflections
 	Ray*				m_pray;			//	Ray which was traced
 	IMaterial*			m_pmaterial;		//	Material of object
 	ILight*				m_pambient_light;	//	Scene ambient light

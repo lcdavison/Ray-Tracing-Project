@@ -1,6 +1,8 @@
 #ifndef CYLINDER_H
 #define CYLINDER_H
 
+#include <algorithm>
+
 #include "geometry.h"
 #include "material/material.h"
 
