@@ -33,3 +33,8 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 
 	return ColourRGB ( 0.2f, 0.2f, 0.2f );	//	Change this to return a background colour instead
 }
+
+ColourRGB DirectTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_depth )
+{
+	return DirectTracer::trace_ray ( p_ray );
+}
