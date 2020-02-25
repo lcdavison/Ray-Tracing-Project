@@ -10,8 +10,9 @@ class PerfectSpecular : public IBRDF
 		PerfectSpecular ( );
 		PerfectSpecular ( const ColourRGB&, float );
 
-		ColourRGB 	function ( const HitResult&, const Vector3&, const Vector3& );
-		ColourRGB 	reflectance ( const HitResult&, const Vector3& );
+		ColourRGB 	function 	( const HitResult&, const Vector3&, const Vector3& );
+		ColourRGB 	sample_function ( const HitResult&, Vector3&, const Vector3& );
+		ColourRGB 	reflectance 	( const HitResult&, const Vector3& );
 
 	private:
 

@@ -14,10 +14,15 @@ ColourRGB BlinnPhongSpecular::function ( const HitResult& p_hitdata, const Vecto
 	if ( half_dot_out > 0.0 )
 		return m_colour * m_coeff * std::pow ( half_dot_out, m_exponent );
 
-	return ColourRGB ( 0.0f, 0.0f, 0.0f );
+	return ColourRGB::BLACK;
+}
+
+ColourRGB BlinnPhongSpecular::sample_function ( const HitResult& p_hitdata, Vector3& p_incoming, const Vector3& p_outgoing )
+{
+	return ColourRGB::BLACK;	
 }
 
 ColourRGB BlinnPhongSpecular::reflectance ( const HitResult& p_hitdata, const Vector3& p_outgoing )
 {
-	return ColourRGB ( 0.0f, 0.0f, 0.0f );
+	return ColourRGB::BLACK;
 }

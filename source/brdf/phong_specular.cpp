@@ -17,6 +17,11 @@ ColourRGB PhongSpecular::function ( const HitResult& p_hitdata, const Vector3& p
 	return ColourRGB ( 0.0f, 0.0f, 0.0f );
 }
 
+ColourRGB PhongSpecular::sample_function ( const HitResult& p_hitdata, Vector3& p_incoming, const Vector3& p_outgoing )
+{
+	return ColourRGB::BLACK;
+}
+
 ColourRGB PhongSpecular::reflectance ( const HitResult& p_hitdata, const Vector3& p_outgoing )
 {
 	return ColourRGB ( 0.0f, 0.0f, 0.0f );

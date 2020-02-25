@@ -9,6 +9,11 @@ ColourRGB Lambertian::function ( const HitResult& p_hitdata, const Vector3& p_in
 	return m_colour * m_coeff * INV_PI;
 }
 
+ColourRGB Lambertian::sample_function ( const HitResult& p_hitdata, Vector3& p_incoming, const Vector3& p_outgoing )
+{
+	return ColourRGB::BLACK;
+}
+
 ColourRGB Lambertian::reflectance ( const HitResult& p_hitdata, const Vector3& p_outgoing )
 {
 	return m_colour * m_coeff;
