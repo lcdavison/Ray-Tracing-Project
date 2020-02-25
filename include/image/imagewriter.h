@@ -11,6 +11,6 @@ class IImageWriter
 {
 	public:
 
-		virtual bool write_image ( const std::string&, const std::vector < ColourRGB >& ) = 0;
+		virtual bool write_image ( const std::string&, std::vector < ColourRGB >& ) = 0;
 };
 #endif

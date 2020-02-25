@@ -5,7 +5,7 @@ PNGWriter::PNGWriter ( unsigned int p_width, unsigned int p_height ) : m_width (
 
 PNGWriter::~PNGWriter ( ) { }
 
-bool PNGWriter::write_image ( const std::string& p_filepath, const std::vector < ColourRGB >& p_colourbuffer )
+bool PNGWriter::write_image ( const std::string& p_filepath, std::vector < ColourRGB >& p_colourbuffer )
 {
 	png_structp png_ptr 	= nullptr;
 	png_infop   info_ptr 	= nullptr;

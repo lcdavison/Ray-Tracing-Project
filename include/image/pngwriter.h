@@ -13,7 +13,7 @@ class PNGWriter : public IImageWriter
 
 		~PNGWriter ( );
 
-		bool 		write_image ( const std::string&, const std::vector < ColourRGB >& );
+		bool 		write_image ( const std::string&, std::vector < ColourRGB >& );
 
 	private:
 
