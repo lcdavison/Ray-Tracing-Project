@@ -13,11 +13,11 @@ class Sphere : public IGeometry
 		void 			rayhit ( const Ray&, HitResult& );
 		bool			shadow_rayhit ( const Ray&, double& );
 
-		void			set_material ( IMaterial* p_material );
+		void			set_material ( IMaterial* );
 
 	private:
 
-		IMaterial*		m_pmaterial = nullptr;
+		IMaterial*		m_material_ptr = nullptr;
 
 		Point3			m_center;
 		double			m_radius;

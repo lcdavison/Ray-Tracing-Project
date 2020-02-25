@@ -54,7 +54,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 				p_hitresult.m_normal = p_hitresult.m_normal * -1.0;	
 			}
 
-			p_hitresult.m_pmaterial = this->m_material_ptr;
+			p_hitresult.m_material_ptr = this->m_material_ptr;
 		}
 	}
 
@@ -73,7 +73,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 				p_hitresult.m_normal = p_hitresult.m_normal * -1.0;	
 			}
 
-			p_hitresult.m_pmaterial = this->m_material_ptr;
+			p_hitresult.m_material_ptr = this->m_material_ptr;
 		}
 	}
 
@@ -100,10 +100,10 @@ void Cylinder::test_caps ( const Ray& p_ray, HitResult& p_hitresult )
 
 		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
 		{
-			p_hitresult.m_hit 	= true;
-			p_hitresult.m_distance 	= distance;
-			p_hitresult.m_normal 	= plane_normal;
-			p_hitresult.m_pmaterial = this->m_material_ptr;	
+			p_hitresult.m_hit 		= true;
+			p_hitresult.m_distance 		= distance;
+			p_hitresult.m_normal 		= plane_normal;
+			p_hitresult.m_material_ptr 	= this->m_material_ptr;	
 		}
 	}
 
@@ -118,10 +118,10 @@ void Cylinder::test_caps ( const Ray& p_ray, HitResult& p_hitresult )
 
 		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
 		{
-			p_hitresult.m_hit 	= true;
-			p_hitresult.m_distance 	= distance;
-			p_hitresult.m_normal 	= plane_normal;
-			p_hitresult.m_pmaterial	= this->m_material_ptr;
+			p_hitresult.m_hit 		= true;
+			p_hitresult.m_distance 		= distance;
+			p_hitresult.m_normal 		= plane_normal;
+			p_hitresult.m_material_ptr	= this->m_material_ptr;
 		}
 	}
 }

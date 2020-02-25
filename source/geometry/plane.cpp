@@ -14,10 +14,10 @@ void Plane::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	if ( distance > m_EPSILON )
 	{
-		p_hitresult.m_hit 	= true;
-		p_hitresult.m_distance 	= distance;
-		p_hitresult.m_normal 	= this->m_normal;
-		p_hitresult.m_pmaterial = this->m_pmaterial;
+		p_hitresult.m_hit 		= true;
+		p_hitresult.m_distance 		= distance;
+		p_hitresult.m_normal 		= this->m_normal;
+		p_hitresult.m_material_ptr 	= this->m_material_ptr;
 	}
 }
 
@@ -37,5 +37,5 @@ bool Plane::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 
 void Plane::set_material ( IMaterial* p_material ) 
 {
-	m_pmaterial = p_material;
+	m_material_ptr = p_material;
 }

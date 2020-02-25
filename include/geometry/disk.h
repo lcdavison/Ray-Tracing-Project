@@ -18,7 +18,7 @@ class Disk : public IGeometry
 
 	private:
 
-		IMaterial*		m_pmaterial = nullptr;
+		IMaterial*		m_material_ptr = nullptr;
 
 		Vector3 		m_normal;
 		Point3			m_center;
