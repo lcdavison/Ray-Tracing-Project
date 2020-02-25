@@ -2,25 +2,28 @@
 #define MATERIAL_H
 
 #include "maths/maths.h"
+#include "brdf/brdf.h"
 #include "geometry/hitresult.h"
 
 struct HitResult;
+class IBRDF;
 
-enum RT_MATERIAL_TYPE { RT_REFLECTIVE, RT_GLOSSY };
+enum RT_MATERIAL_TYPE { RT_REFLECTIVE = 0x1, RT_REFRACTIVE = 0x2, RT_GLOSSY = 0x4 };
 
 class IMaterial 
 {
 	public:
 
-		virtual ColourRGB shade ( const HitResult&, const Ray& ) = 0;
+		virtual ColourRGB 	shade 		( const HitResult&, const Ray& ) 	= 0;
+		virtual ColourRGB	shade_arealight ( const HitResult&, const Ray& ) 	= 0;	//	Different shade function due to Monte Carlo Approximation for lighting
 
-		virtual bool 	get_reflective ( ) { return m_reflective; }
-		unsigned char 	get_flags ( ) { return m_flags; }
+		virtual IBRDF* 		get_diffuse_brdf 	( ) = 0;	//	This is used for path tracing
+		virtual IBRDF*		get_specular_brdf 	( ) = 0;	//	Used for reflections
+
+		unsigned char		get_flags ( ) { return m_flags; }
 
 	protected:
 
 		unsigned char m_flags = 0;
-
-		bool m_reflective = false;
 };
 #endif

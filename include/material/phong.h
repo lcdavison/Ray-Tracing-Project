@@ -15,12 +15,19 @@ class Phong : public IMaterial
 
 		~Phong ( );
 
-		ColourRGB 		shade ( const HitResult&, const Ray& );
+		ColourRGB 		shade 		( const HitResult&, const Ray& );
+		ColourRGB		shade_arealight ( const HitResult&, const Ray& );
 
-	private:
+		IBRDF*			get_diffuse_brdf  ( );
+		IBRDF*			get_specular_brdf ( );
+
+	protected:
 
 		Lambertian* 		m_ambient_brdf 		= nullptr;
 		Lambertian* 		m_diffuse_brdf 		= nullptr;
+
+	private:
+
 		PhongSpecular* 		m_specular_brdf 	= nullptr;
 };
 
@@ -33,7 +40,11 @@ class PhongReflective : public Phong
 
 		~PhongReflective ( );
 
-		ColourRGB 		shade ( const HitResult&, const Ray& );
+		ColourRGB 		shade 		( const HitResult&, const Ray& );
+		ColourRGB		shade_arealight ( const HitResult&, const Ray& );
+
+		IBRDF*			get_diffuse_brdf  ( );
+		IBRDF*			get_specular_brdf ( );
 
 	private:
 

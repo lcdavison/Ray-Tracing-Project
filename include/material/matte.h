@@ -13,7 +13,11 @@ class Matte : public IMaterial
 
 		~Matte ( );
 
-		ColourRGB	shade ( const HitResult&, const Ray& );
+		ColourRGB	shade 		( const HitResult&, const Ray& );
+		ColourRGB	shade_arealight ( const HitResult&, const Ray& );
+
+		IBRDF*		get_diffuse_brdf  ( );
+		IBRDF*		get_specular_brdf ( );
 
 		void 		set_ambient_coeff ( float );
 		void 		set_diffuse_coeff ( float );
