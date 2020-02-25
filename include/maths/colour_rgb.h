@@ -1,5 +1,8 @@
 #ifndef COLOUR_RGB_H
 #define COLOUR_RGB_H
+
+#include <algorithm>
+
 class ColourRGB 
 {
 	public:
@@ -12,7 +15,10 @@ class ColourRGB
 		float 		get_green ( ) 	const;
 		float 		get_blue ( ) 	const;
 
-		unsigned int 	int_format ( ) 	const;
+		unsigned int 	int_format ( );
+
+		static ColourRGB BLACK;
+		static ColourRGB WHITE;
 
 	private:
 
