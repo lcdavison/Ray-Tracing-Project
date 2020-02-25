@@ -13,7 +13,7 @@ bool PointLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 {
 	double point_dist = ( m_position - p_ray.get_origin ( ) ).length ( );
 
-	for ( IGeometry* geometry : *p_hitdata.m_pgeometry )
+	for ( IGeometry* geometry : *p_hitdata.m_geometry_ptr )
 	{
 		double distance;
 		if ( geometry->shadow_rayhit ( p_ray, distance ) && distance < point_dist )

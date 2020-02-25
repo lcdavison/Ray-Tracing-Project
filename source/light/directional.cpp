@@ -11,7 +11,7 @@ ColourRGB DirectionalLight::radiance ( )
 
 bool DirectionalLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 {
-	for ( IGeometry* geometry : *p_hitdata.m_pgeometry )
+	for ( IGeometry* geometry : *p_hitdata.m_geometry_ptr )
 	{
 		double distance = 0;
 
