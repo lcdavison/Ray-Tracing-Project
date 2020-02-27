@@ -3,12 +3,12 @@
 
 #include "brdf.h"
 
-class PerfectSpecular : public IBRDF
+class PerfectReflection : public IBRDF
 {
 	public:
 		
-		PerfectSpecular ( );
-		PerfectSpecular ( const ColourRGB&, float );
+		PerfectReflection ( );
+		PerfectReflection ( const ColourRGB&, float );
 
 		ColourRGB 	function 	( const HitResult&, const Vector3&, const Vector3& );
 		ColourRGB 	sample_function ( const HitResult&, Vector3&, const Vector3& );

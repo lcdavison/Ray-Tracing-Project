@@ -11,7 +11,7 @@ BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float
 	m_specular_brdf = new BlinnPhongSpecular 	( p_colour, p_specular_coeff, p_specular_exponent );
 
 	if ( m_flags & RT_REFLECTIVE )
-		m_reflection_brdf = new PerfectSpecular ( ColourRGB::WHITE, 1.0f );
+		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 1.0f );
 }
 
 BlinnPhong::~BlinnPhong ( )

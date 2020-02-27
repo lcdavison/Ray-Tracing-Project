@@ -7,7 +7,7 @@
 
 #include "brdf/lambertian.h"
 #include "brdf/blinn-phong_specular.h"
-#include "brdf/perfect_specular.h"
+#include "brdf/perfect_reflection.h"
 
 class BlinnPhong : public IMaterial, public IReflective, public IRefractive
 {

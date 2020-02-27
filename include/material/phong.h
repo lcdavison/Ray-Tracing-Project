@@ -7,7 +7,7 @@
 
 #include "brdf/lambertian.h"
 #include "brdf/phong_specular.h"
-#include "brdf/perfect_specular.h"
+#include "brdf/perfect_reflection.h"
 
 class Phong : public IMaterial, public IReflective, public IRefractive
 {
