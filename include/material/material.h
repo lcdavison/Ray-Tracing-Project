@@ -20,6 +20,7 @@ class IMaterial
 		virtual IBRDF* 		get_diffuse_brdf 	( ) = 0;	//	This is used for path tracing
 		virtual IBRDF*		get_specular_brdf 	( ) = 0;	//	Used for reflections
 
+		void 			set_flags ( unsigned char p_flags ) { m_flags |= p_flags; }
 		unsigned char		get_flags ( ) { return m_flags; }
 
 	protected:

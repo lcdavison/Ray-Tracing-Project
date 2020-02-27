@@ -2,11 +2,16 @@
 
 Phong::Phong ( ) { }
 
-Phong::Phong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent )
+Phong::Phong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent, unsigned char p_flags )
 {
-	m_ambient_brdf 		= new Lambertian 	( p_colour, p_ambient_coeff );
-	m_diffuse_brdf 		= new Lambertian 	( p_colour, p_diffuse_coeff );
-	m_specular_brdf 	= new PhongSpecular 	( p_colour, p_specular_coeff, p_specular_exponent );
+	m_flags = p_flags;
+
+	m_ambient_brdf 	= new Lambertian 	( p_colour, p_ambient_coeff );
+	m_diffuse_brdf 	= new Lambertian 	( p_colour, p_diffuse_coeff );
+	m_specular_brdf	= new PhongSpecular 	( p_colour, p_specular_coeff, p_specular_exponent );
+
+	if ( m_flags & RT_REFLECTIVE )
+		m_reflection_brdf = new PerfectSpecular ( ColourRGB::WHITE, 1.0f );
 }
 
 Phong::~Phong ( )
@@ -19,6 +24,12 @@ Phong::~Phong ( )
 
 	delete m_specular_brdf;
 	m_specular_brdf = nullptr;
+
+	if ( m_reflection_brdf )
+	{
+		delete m_reflection_brdf;
+		m_reflection_brdf = nullptr;
+	}
 }
 
 ColourRGB Phong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
@@ -52,7 +63,7 @@ ColourRGB Phong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 		}
 	}
 
-	return radiance;
+	return radiance + p_hitdata.m_indirect_radiance;
 }
 
 ColourRGB Phong::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray )
@@ -91,7 +102,7 @@ ColourRGB Phong::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray 
 		radiance = radiance * ( 1.0 / light->get_num_samples ( ) );
 	}
 
-	return radiance;
+	return radiance + p_hitdata.m_indirect_radiance;
 }
 
 IBRDF* Phong::get_diffuse_brdf ( )
@@ -102,44 +113,4 @@ IBRDF* Phong::get_diffuse_brdf ( )
 IBRDF* Phong::get_specular_brdf ( )
 {
 	return m_specular_brdf;
-}
-
-PhongReflective::PhongReflective ( ) { }
-
-PhongReflective::PhongReflective ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent, const ColourRGB& p_reflection_colour, float p_reflection_coeff ) 
-	: Phong ( p_colour, p_ambient_coeff, p_diffuse_coeff, p_specular_coeff, p_specular_exponent )
-{
-	m_flags |= RT_REFLECTIVE;
-
-	m_perfect_specular_brdf = new PerfectSpecular ( p_reflection_colour, p_reflection_coeff );
-}
-
-PhongReflective::~PhongReflective ( )
-{
-	delete m_perfect_specular_brdf;
-	m_perfect_specular_brdf = nullptr;
-}
-
-ColourRGB PhongReflective::shade ( const HitResult& p_hitdata, const Ray& p_ray )
-{
-	ColourRGB direct_illumination = Phong::shade ( p_hitdata, p_ray );
-
-	return direct_illumination + p_hitdata.m_reflection_radiance;
-}
-
-ColourRGB PhongReflective::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray )
-{
-	ColourRGB direct_illumination = Phong::shade_arealight ( p_hitdata, p_ray );
-
-	return direct_illumination + p_hitdata.m_reflection_radiance;	
-}
-
-IBRDF* PhongReflective::get_diffuse_brdf ( )
-{
-	return m_diffuse_brdf;
-}
-
-IBRDF* PhongReflective::get_specular_brdf ( )
-{
-	return m_perfect_specular_brdf;
 }

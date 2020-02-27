@@ -2,16 +2,19 @@
 #define PHONG_H
 
 #include "material.h"
+#include "reflective.h"
+#include "refractive.h"
+
 #include "brdf/lambertian.h"
 #include "brdf/phong_specular.h"
 #include "brdf/perfect_specular.h"
 
-class Phong : public IMaterial
+class Phong : public IMaterial, public IReflective, public IRefractive
 {
 	public:
 
 		Phong ( );
-		Phong ( const ColourRGB&, float, float, float, float );
+		Phong ( const ColourRGB&, float, float, float, float, unsigned char );
 
 		~Phong ( );
 
@@ -29,25 +32,5 @@ class Phong : public IMaterial
 	private:
 
 		PhongSpecular* 		m_specular_brdf 	= nullptr;
-};
-
-class PhongReflective : public Phong 
-{
-	public:
-
-		PhongReflective ( );
-		PhongReflective ( const ColourRGB&, float, float, float, float, const ColourRGB&, float );
-
-		~PhongReflective ( );
-
-		ColourRGB 		shade 		( const HitResult&, const Ray& );
-		ColourRGB		shade_arealight ( const HitResult&, const Ray& );
-
-		IBRDF*			get_diffuse_brdf  ( );
-		IBRDF*			get_specular_brdf ( );
-
-	private:
-
-		PerfectSpecular*	m_perfect_specular_brdf = nullptr;
 };
 #endif

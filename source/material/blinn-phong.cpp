@@ -2,11 +2,16 @@
 
 BlinnPhong::BlinnPhong ( ) { }
 
-BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent )
+BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent, unsigned char p_flags )
 {
+	m_flags = p_flags;
+
 	m_ambient_brdf 	= new Lambertian 		( p_colour, p_ambient_coeff );
 	m_diffuse_brdf 	= new Lambertian 		( p_colour, p_diffuse_coeff );
 	m_specular_brdf = new BlinnPhongSpecular 	( p_colour, p_specular_coeff, p_specular_exponent );
+
+	if ( m_flags & RT_REFLECTIVE )
+		m_reflection_brdf = new PerfectSpecular ( ColourRGB::WHITE, 1.0f );
 }
 
 BlinnPhong::~BlinnPhong ( )
@@ -19,6 +24,12 @@ BlinnPhong::~BlinnPhong ( )
 
 	delete m_specular_brdf;
 	m_specular_brdf = nullptr;
+
+	if ( m_flags & RT_REFLECTIVE )
+	{
+		delete m_reflection_brdf;
+		m_reflection_brdf = nullptr;
+	}
 }
 
 ColourRGB BlinnPhong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
@@ -52,7 +63,7 @@ ColourRGB BlinnPhong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 		}
 	}
 
-	return radiance;
+	return radiance + p_hitdata.m_indirect_radiance;
 }
 
 ColourRGB BlinnPhong::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray )
@@ -91,7 +102,7 @@ ColourRGB BlinnPhong::shade_arealight ( const HitResult& p_hitdata, const Ray& p
 		radiance = radiance * ( 1.0 / light->get_num_samples ( ) );
 	}
 
-	return radiance;	
+	return radiance + p_hitdata.m_indirect_radiance;
 }
 
 IBRDF* BlinnPhong::get_diffuse_brdf ( )
@@ -102,43 +113,4 @@ IBRDF* BlinnPhong::get_diffuse_brdf ( )
 IBRDF* BlinnPhong::get_specular_brdf ( )
 {
 	return m_specular_brdf;
-}
-
-BlinnPhongReflective::BlinnPhongReflective ( ) { }
-
-BlinnPhongReflective::BlinnPhongReflective ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent, const ColourRGB& p_reflection_colour, float p_reflection_coeff )					    : BlinnPhong ( p_colour, p_ambient_coeff, p_diffuse_coeff, p_specular_coeff, p_specular_exponent ) 
-{
-	m_flags |= RT_REFLECTIVE;
-
-	m_perfect_specular_brdf = new PerfectSpecular ( p_reflection_colour, p_reflection_coeff );
-}
-
-BlinnPhongReflective::~BlinnPhongReflective ( )
-{
-	delete m_perfect_specular_brdf;
-	m_perfect_specular_brdf = nullptr;
-}
-
-ColourRGB BlinnPhongReflective::shade ( const HitResult& p_hitdata, const Ray& p_ray )
-{
-	ColourRGB direct_illumination = BlinnPhong::shade ( p_hitdata, p_ray );
-
-	return direct_illumination + p_hitdata.m_reflection_radiance;
-}
-
-ColourRGB BlinnPhongReflective::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray )
-{
-	ColourRGB direct_illumination = BlinnPhong::shade_arealight ( p_hitdata, p_ray );
-
-	return direct_illumination + p_hitdata.m_reflection_radiance;
-}
-
-IBRDF* BlinnPhongReflective::get_diffuse_brdf ( )
-{
-	return m_diffuse_brdf;
-}
-
-IBRDF* BlinnPhongReflective::get_specular_brdf ( )
-{
-	return m_perfect_specular_brdf;
 }
