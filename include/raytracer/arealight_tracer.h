@@ -3,6 +3,8 @@
 
 #include "raytracer.h"
 #include "scene/scene.h"
+#include "material/reflective.h"
+#include "material/refractive.h"
 
 class AreaLightTracer : public IRayTracer 
 {

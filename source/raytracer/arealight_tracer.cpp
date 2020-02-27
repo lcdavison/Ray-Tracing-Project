@@ -38,10 +38,10 @@ ColourRGB AreaLightTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFLECTIVE )
 		{
 			Vector3 direction;
-			ColourRGB brdf = closest_result.m_material_ptr->get_specular_brdf ( )->sample_function ( closest_result, direction, -1.0 * p_ray.get_direction ( ) );
+			ColourRGB brdf = dynamic_cast < IReflective* > ( closest_result.m_material_ptr )->get_reflection_brdf ( )->sample_function ( closest_result, direction, -1.0 * p_ray.get_direction ( ) );
 
 			Ray ray ( closest_result.m_hitpoint, direction );
-			closest_result.m_reflection_radiance = trace_ray ( ray, p_depth++, p_max_depth ) * brdf;
+			closest_result.m_indirect_radiance = trace_ray ( ray, p_depth++, p_max_depth ) * brdf;
 		}
 
 		return closest_result.m_material_ptr->shade_arealight ( closest_result, p_ray );

@@ -4,6 +4,8 @@
 #include "raytracer.h"
 #include "geometry/hitresult.h"
 #include "scene/scene.h"
+#include "material/reflective.h"
+#include "material/refractive.h"
 
 /*
  *	The recursive tracer is used to recursively compute reflections
@@ -21,6 +23,6 @@ class RecursiveTracer : public IRayTracer
 
 	private:
 
-		Scene* 		m_pscene = nullptr;
+		Scene* 		m_scene_ptr = nullptr;
 };
 #endif

@@ -20,6 +20,6 @@ class DirectTracer : public IRayTracer
 
 	private:
 
-		Scene*		m_pscene = nullptr;
+		Scene*		m_scene_ptr = nullptr;
 };
 #endif
