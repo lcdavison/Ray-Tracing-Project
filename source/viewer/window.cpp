@@ -12,7 +12,7 @@ Window::Window ( unsigned short p_width, unsigned short p_height ) : m_width ( p
 
 Window::~Window ( ) 
 {
-	SDL_DestroyWindow ( m_pwindow );
+	SDL_DestroyWindow ( m_window_ptr );
 }
 
 void Window::update ( )
@@ -31,20 +31,20 @@ void Window::update ( )
 
 void Window::present ( )
 {
-	SDL_UpdateWindowSurface ( m_pwindow );
+	SDL_UpdateWindowSurface ( m_window_ptr );
 }
 
 void Window::create_window ( )
 {
-	m_pwindow = SDL_CreateWindow ( "Ray Tracer - Luke Davison", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, 0 );
+	m_window_ptr = SDL_CreateWindow ( "Ray Tracer - Luke Davison", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, 0 );
 
-	if ( !m_pwindow )
+	if ( !m_window_ptr )
 	{
 		std::cout << "Failed to create window" << std::endl;
 		//	Do something
 	}
 
-	m_surface_ptr = SDL_GetWindowSurface ( m_pwindow );
+	m_surface_ptr = SDL_GetWindowSurface ( m_window_ptr );
 
 	m_colourbuffer.resize ( m_width * m_height, ColourRGB ( 0.0f, 0.0f, 0.0f ) );
 }
@@ -60,11 +60,19 @@ void Window::handle_events ( )
 			case SDL_QUIT:
 				RTEventManager::push_event ( RT_QUIT );
 				return;
+			case SDL_WINDOWEVENT:
+				switch ( event.window.event )
+				{
+					case SDL_WINDOWEVENT_FOCUS_GAINED:
+						present ( );
+						break;
+				}
+				break;
 		}
 	}
 }
 
-void Window::set_pixel ( unsigned short p_x, unsigned short p_y, const ColourRGB& p_colour )
+void Window::set_pixel ( unsigned short p_x, unsigned short p_y, ColourRGB& p_colour )
 {
 	m_colourbuffer.at ( p_y * m_width + p_x ) = p_colour;
 
@@ -84,7 +92,7 @@ unsigned short Window::get_height ( )
 	return m_height;
 }
 
-const std::vector < ColourRGB >& Window::get_colourbuffer ( )
+std::vector < ColourRGB >& Window::get_colourbuffer ( )
 {
 	return m_colourbuffer;
 }
