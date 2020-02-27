@@ -1,6 +1,9 @@
 #include "maths/colour_rgb.h"
 
-ColourRGB::ColourRGB ( ) : m_red ( 1.0f ), m_green ( 1.0f ), m_blue ( 1.0f )
+ColourRGB ColourRGB::BLACK = ColourRGB ( 0.0f, 0.0f, 0.0f );
+ColourRGB ColourRGB::WHITE = ColourRGB ( 1.0f, 1.0f, 1.0f );
+
+ColourRGB::ColourRGB ( ) : m_red ( 0.0f ), m_green ( 0.0f ), m_blue ( 0.0f )
 {
 }
 
@@ -23,14 +26,17 @@ float ColourRGB::get_blue ( ) const
 	return m_blue;
 }
 
-unsigned int ColourRGB::int_format ( ) const
+unsigned int ColourRGB::int_format ( ) 
 {
 	//	Perform Tone Mapping
 	float max_value = std::max ( m_red, std::max ( m_green, m_blue ) );
 
-	m_red 	/= max_value;
-	m_green /= max_value;
-	m_blue  /= max_value;
+	if ( max_value > 1.0 )
+	{
+		m_red 	/= max_value;
+		m_green /= max_value;
+		m_blue  /= max_value;
+	}
 
 	unsigned int final_colour = 0;
 
