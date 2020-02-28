@@ -19,6 +19,18 @@ class ISampler
 		void 			map_to_disk ( );	//	Used for sampling circles
 		void 			map_to_hemisphere ( );	//	Used for sampling hemisphere
 
+		Point3			sample_square ( )
+		{
+			if ( m_current_index % m_num_samples == 0 )	//	Reached the end of a set
+				m_start_marker = ( m_random ( m_generator ) ) * m_num_samples;	//	Update start marker
+
+			return m_samples.at ( m_start_marker + m_shuffled_indices [ m_start_marker + m_current_index++ % m_num_samples ] );
+		}
+
+		unsigned int 		get_num_samples ( ) { return m_num_samples; }
+
+	protected:
+
 		void 			setup_indices ( )
 		{
 			std::vector < unsigned int > indices;
@@ -36,18 +48,6 @@ class ISampler
 				}
 			}
 		}
-
-		Point3			sample_square ( )
-		{
-			if ( m_current_index % m_num_samples == 0 )	//	Reached the end of a set
-				m_start_marker = ( m_random ( m_generator ) ) * m_num_samples;	//	Update start marker
-
-			return m_samples.at ( m_start_marker + m_shuffled_indices [ m_start_marker + m_current_index++ % m_num_samples ] );
-		}
-
-		unsigned int 		get_num_samples ( ) { return m_num_samples; }
-
-	protected:
 
 		unsigned int			m_num_samples;		//	Number of samples per set
 		unsigned int 			m_num_sets;		//	Number of sets of samples

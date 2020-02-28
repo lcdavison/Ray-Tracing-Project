@@ -6,6 +6,8 @@ MultiJitteredSampler::MultiJitteredSampler ( unsigned int p_num_samples, unsigne
 	 m_num_sets	 = p_num_sets;
 	 m_current_index = 0;
 	 m_random 	 = std::uniform_int_distribution < unsigned int > ( 0, m_num_sets - 1 );
+
+	 setup_indices ( );
 }
 
 void MultiJitteredSampler::generate_samples ( )
