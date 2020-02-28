@@ -1,16 +1,17 @@
 #ifndef REFRACTIVE_H
 #define REFRACTIVE_H
 
-#include "brdf/brdf.h"
+#include "btdf/btdf.h"
 
 class IRefractive 
 {
 	public:
 
-		//	TODO : Refraction
+		void 	set_refraction_btdf ( IBTDF* p_btdf ) { m_refraction_btdf = p_btdf; }
+		IBTDF*	get_refraction_btdf ( ) { return m_refraction_btdf; }
 
-	private:
+	protected:
 
-		//	IBTDF* m_refraction_btdf_ptr;
+		IBTDF* m_refraction_btdf;
 };
 #endif

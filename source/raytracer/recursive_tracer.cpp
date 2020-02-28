@@ -37,22 +37,46 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 		closest_result.m_lights_ptr 		= &( m_scene_ptr->get_lights ( ) );
 		closest_result.m_geometry_ptr		= &( m_scene_ptr->get_geometry ( ) );
 
+		ColourRGB reflection;
+		ColourRGB refraction;
+
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFLECTIVE )
 		{
 			Vector3 direction;
 			ColourRGB brdf = dynamic_cast < IReflective* > ( closest_result.m_material_ptr )->get_reflection_brdf ( )->sample_function ( closest_result, direction, -1.0 * p_ray.get_direction ( ) );
 
 			Ray ray ( closest_result.m_hitpoint, direction );
-			closest_result.m_indirect_radiance = trace_ray ( ray, p_depth++, p_max_depth ) * brdf;	//	Calculate total radiance of reflection
+			reflection = trace_ray ( ray, p_depth + 1, p_max_depth ) * brdf;	//	Calculate total radiance of reflection
 		}
 
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFRACTIVE )
 		{
-			//	Test for total internal reflection
+			IRefractive* refract_material = dynamic_cast < IRefractive* > ( closest_result.m_material_ptr );
 
+			Vector3 reflection_direction;
+			ColourRGB brdf = dynamic_cast < IReflective* > ( closest_result.m_material_ptr )->get_reflection_brdf ( )->sample_function ( closest_result, reflection_direction, -1.0 * p_ray.get_direction ( ) );
 
+			if ( refract_material->get_refraction_btdf ( )->total_internal_reflection ( closest_result, p_ray ) )
+			{
+				Ray ray ( closest_result.m_hitpoint, reflection_direction );
+				reflection = trace_ray ( ray, p_depth + 1, p_max_depth );
+			}
+			else
+			{
+				//	Compute reflection
+				Ray reflect_ray ( closest_result.m_hitpoint, reflection_direction );
+				reflection = trace_ray ( reflect_ray, p_depth + 1, p_max_depth ) * brdf;
 
+				//	Compute refraction
+				Vector3 refraction_direction;
+				ColourRGB btdf = refract_material->get_refraction_btdf ( )->sample_function ( closest_result, refraction_direction, -1.0 * p_ray.get_direction ( ) );
+
+				Ray refract_ray ( closest_result.m_hitpoint, refraction_direction );
+				refraction = trace_ray ( refract_ray, p_depth + 1, p_max_depth ) * btdf;
+			}
 		}
+
+		closest_result.m_indirect_radiance = refraction + reflection;
 
 		/*
 		 *	Glossy Reflections
