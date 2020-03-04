@@ -1,7 +1,5 @@
 #include "material/blinn-phong.h"
 
-#include <iostream>
-
 BlinnPhong::BlinnPhong ( ) { }
 
 BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse_coeff, float p_specular_coeff, float p_specular_exponent, unsigned char p_flags )
@@ -18,8 +16,11 @@ BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float
 	if ( m_flags & RT_REFRACTIVE )
 	{
 		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 0.1f );
-		m_refraction_btdf = new PerfectRefraction ( 1.1f, 0.9f );
+		m_refraction_btdf = new PerfectRefraction ( 1.5f, 0.9f );
 	}
+
+	if ( m_flags & RT_GLOSSY )
+		m_glossy_brdf = new GlossyReflection ( p_colour, 0.8f, p_specular_exponent );
 }
 
 BlinnPhong::~BlinnPhong ( )
@@ -33,16 +34,22 @@ BlinnPhong::~BlinnPhong ( )
 	delete m_specular_brdf;
 	m_specular_brdf = nullptr;
 
-	if ( m_flags & RT_REFLECTIVE )
+	if ( m_reflection_brdf )
 	{
 		delete m_reflection_brdf;
 		m_reflection_brdf = nullptr;
 	}
 
-	if ( m_flags & RT_REFRACTIVE )
+	if ( m_refraction_btdf )
 	{
 		delete m_refraction_btdf;
 		m_refraction_btdf = nullptr;
+	}
+
+	if ( m_glossy_brdf )
+	{
+		delete m_glossy_brdf;
+		m_glossy_brdf = nullptr;
 	}
 }
 

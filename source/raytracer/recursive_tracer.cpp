@@ -49,6 +49,24 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 			reflection = trace_ray ( ray, p_depth + 1, p_max_depth ) * brdf;	//	Calculate total radiance of reflection
 		}
 
+		if ( closest_result.m_material_ptr->get_flags ( ) & RT_GLOSSY )
+		{
+			IGlossy* material  	   = dynamic_cast < IGlossy* > ( closest_result.m_material_ptr );
+			ISampledBRDF* brdf_sampler = dynamic_cast < ISampledBRDF* > ( material->get_glossy_brdf ( ) );
+
+			//	Monte Carlo integration
+			for ( int i = 0; i < 100; ++i )
+			{
+				Vector3 direction;
+				ColourRGB brdf = material->get_glossy_brdf ( )->sample_function ( closest_result, direction, -1.0 * p_ray.get_direction ( ) );
+
+				Ray ray ( closest_result.m_hitpoint, direction );
+				reflection = reflection + ( trace_ray ( ray, p_depth + 1, p_max_depth ) * brdf * ( 1.0f / brdf_sampler->get_probability_density_function ( ) ) );
+			}
+
+			reflection = reflection * ( 1.0 / 100.0 );
+		}
+
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFRACTIVE )
 		{
 			IRefractive* refract_material = dynamic_cast < IRefractive* > ( closest_result.m_material_ptr );
@@ -77,21 +95,6 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 		}
 
 		closest_result.m_indirect_radiance = refraction + reflection;
-
-		/*
-		 *	Glossy Reflections
-		 *
-		 *	if ( closest_result.m_pmaterial->get_mask ( ) & RT_GLOSSY )
-		 *	{
-		 *		1. Construct Orthonormal basis at hitpoint
-		 *		2. Monte Carlo integration:
-		 *			1. Sample Hemisphere
-		 *			2. Transform sample into orthonormal basis
-		 *			3. Trace random direction and accumulate glossy reflection radiance
-		 *		3. Divide by PDF and number of samples
-		 *	}
-		 *	
-		 * */
 
 		return closest_result.m_material_ptr->shade ( closest_result, p_ray );
 	}

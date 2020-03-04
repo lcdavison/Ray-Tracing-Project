@@ -12,6 +12,15 @@ Phong::Phong ( const ColourRGB& p_colour, float p_ambient_coeff, float p_diffuse
 
 	if ( m_flags & RT_REFLECTIVE )
 		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 1.0f );
+
+	if ( m_flags & RT_REFRACTIVE )
+	{
+		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 0.2f );
+		m_refraction_btdf = new PerfectRefraction ( 1.33f, 0.8f );
+	}
+
+	if ( m_flags & RT_GLOSSY )
+		m_glossy_brdf = new GlossyReflection ( p_colour, 0.8f, p_specular_exponent );
 }
 
 Phong::~Phong ( )
@@ -29,6 +38,18 @@ Phong::~Phong ( )
 	{
 		delete m_reflection_brdf;
 		m_reflection_brdf = nullptr;
+	}
+
+	if ( m_refraction_btdf )
+	{
+		delete m_refraction_btdf;
+		m_refraction_btdf = nullptr;
+	}
+
+	if ( m_glossy_brdf )
+	{
+		delete m_glossy_brdf;
+		m_glossy_brdf = nullptr;
 	}
 }
 

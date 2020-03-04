@@ -4,13 +4,16 @@
 #include "material.h"
 #include "reflective.h"
 #include "refractive.h"
+#include "glossy.h"
 
 #include "brdf/lambertian.h"
 #include "brdf/blinn-phong_specular.h"
 #include "brdf/perfect_reflection.h"
+#include "brdf/glossy_reflection.h"
+
 #include "btdf/perfect_refraction.h"
 
-class BlinnPhong : public IMaterial, public IReflective, public IRefractive
+class BlinnPhong : public IMaterial, public IReflective, public IRefractive, public IGlossy
 {
 	public:
 
@@ -25,13 +28,10 @@ class BlinnPhong : public IMaterial, public IReflective, public IRefractive
 		IBRDF*				get_diffuse_brdf  ( );
 		IBRDF*				get_specular_brdf ( );
 
-	protected:
+	private:
 
 		Lambertian* 			m_ambient_brdf 	= nullptr;
 		Lambertian* 			m_diffuse_brdf 	= nullptr;
-
-	private:
-
 		BlinnPhongSpecular* 		m_specular_brdf = nullptr;
 };
 #endif

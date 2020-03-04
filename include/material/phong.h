@@ -4,12 +4,16 @@
 #include "material.h"
 #include "reflective.h"
 #include "refractive.h"
+#include "glossy.h"
 
 #include "brdf/lambertian.h"
 #include "brdf/phong_specular.h"
 #include "brdf/perfect_reflection.h"
+#include "brdf/glossy_reflection.h"
 
-class Phong : public IMaterial, public IReflective, public IRefractive
+#include "btdf/perfect_refraction.h"
+
+class Phong : public IMaterial, public IReflective, public IRefractive, public IGlossy
 {
 	public:
 

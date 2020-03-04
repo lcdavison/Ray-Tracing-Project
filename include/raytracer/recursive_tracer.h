@@ -6,6 +6,7 @@
 #include "scene/scene.h"
 #include "material/reflective.h"
 #include "material/refractive.h"
+#include "material/glossy.h"
 
 /*
  *	The recursive tracer is used to recursively compute reflections

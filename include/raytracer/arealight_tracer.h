@@ -5,6 +5,7 @@
 #include "scene/scene.h"
 #include "material/reflective.h"
 #include "material/refractive.h"
+#include "material/glossy.h"
 
 class AreaLightTracer : public IRayTracer 
 {
