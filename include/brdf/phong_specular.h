@@ -14,6 +14,10 @@ class PhongSpecular : public IBRDF
 		ColourRGB 	sample_function ( const HitResult&, Vector3&, const Vector3& );
 		ColourRGB 	reflectance 	( const HitResult&, const Vector3& );
 
+		void 		set_colour 	( const ColourRGB& );
+		void 		set_coeff 	( float );
+		void 		set_exponent 	( float );
+
 	private:
 
 		ColourRGB 	m_colour;

@@ -21,3 +21,13 @@ ColourRGB PerfectReflection::reflectance ( const HitResult& p_hitdata, const Vec
 {
 	return m_colour * m_coeff;
 }
+
+void PerfectReflection::set_colour ( const ColourRGB& p_colour )
+{
+	m_colour = p_colour;
+}
+
+void PerfectReflection::set_coeff ( float p_coeff )
+{
+	m_coeff = p_coeff;
+}

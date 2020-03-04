@@ -26,3 +26,18 @@ ColourRGB PhongSpecular::reflectance ( const HitResult& p_hitdata, const Vector3
 {
 	return ColourRGB ( 0.0f, 0.0f, 0.0f );
 }
+
+void PhongSpecular::set_colour ( const ColourRGB& p_colour )
+{
+	m_colour = p_colour;
+}
+
+void PhongSpecular::set_coeff ( float p_coeff )
+{
+	m_coeff = p_coeff;
+}
+
+void PhongSpecular::set_exponent ( float p_exponent )
+{
+	m_exponent = p_exponent;
+}
