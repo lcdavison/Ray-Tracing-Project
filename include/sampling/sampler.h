@@ -21,18 +21,19 @@ class ISampler
 
 		void 			map_to_disk ( );	//	Used for sampling circles
 
-		void 			map_to_hemisphere ( )	//	Used to map samples to a hemisphere 
+		void 			map_to_hemisphere ( double exp )	//	Used to map samples to a hemisphere 
 		{
 			for ( Point3 sample : m_samples )
 			{
-				double sine_theta = std::sqrt ( sample.x );
-				double cosine_theta = std::sqrt ( 1.0 - sample.x );
+				//	Uses a Phong Distribution
+				double cosine_theta = std::pow ( 1.0 - sample.x, 1.0 / ( exp + 1 ) );
+				double sine_theta = std::sqrt ( 1.0 - ( cosine_theta * cosine_theta ) );
 				double phi = 2.0 * M_PI * sample.y;
 
 				Point3 hemisphere_sample;
 				hemisphere_sample.x = std::cos ( phi ) * sine_theta;
 				hemisphere_sample.y = std::sin ( phi ) * sine_theta;
-				hemisphere_sample.z = std::sqrt ( 1.0 - sample.x );
+				hemisphere_sample.z = cosine_theta;
 
 				m_hemisphere_samples.push_back ( hemisphere_sample );
 			}
