@@ -2,6 +2,7 @@
 #define SCENE_H
 
 #include <vector>
+#include <chrono>
 
 #include "maths/maths.h"
 
@@ -16,6 +17,11 @@
 #include "light/light.h"
 #include "light/ambient.h"
 
+#include "image/imagewriter.h"
+#include "image/pngwriter.h"
+
+#include "sampling/sampler.h"
+
 class Scene 
 {
 	public:
@@ -29,15 +35,15 @@ class Scene
 
 		~Scene ( );
 
-		void 					build_scene ( );
 		void 					render ( );
 		void					update_window ( );
 
 		void 					add_geometry 	( IGeometry* );
 		void					add_light	( ILight* );
 
-		void 					set_tracer ( IRayTracer* );
-		void					set_camera ( ICamera* );
+		void 					set_tracer  ( IRayTracer* );
+		void					set_camera  ( ICamera* );
+		void					set_sampler ( ISampler* );
 
 		AmbientLight*				get_ambient_light 	( );
 		std::vector < IGeometry* >&		get_geometry		( );
@@ -45,16 +51,18 @@ class Scene
 
 	private:
 
+		unsigned int 				m_anti_aliasing_samples;
+
 		std::vector < IGeometry* > 		m_geometry;
-
 		std::vector < ILight* >			m_lights;
-		AmbientLight*				m_pambient_light = nullptr;
 
-		Window* 				m_pwindow = nullptr;
+		AmbientLight*				m_ambient_light_ptr 	= nullptr;
+
+		Window* 				m_window_ptr 		= nullptr;
 		
-		IRayTracer*				m_ptracer = nullptr;	//	Determines how the rays will be traced
-		ICamera*				m_pcamera = nullptr;
-
-
+		IRayTracer*				m_tracer_ptr 		= nullptr;	//	Determines how the rays will be traced
+		ICamera*				m_camera_ptr 		= nullptr;	//	Determines the viewing parameters
+		IImageWriter*				m_imagewriter_ptr 	= nullptr;	//	Determines the output format of an image
+		ISampler*				m_sampler_ptr		= nullptr;	//	Generate sample points for anti-aliasing
 };
 #endif
