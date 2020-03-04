@@ -23,7 +23,7 @@ ColourRGB PerfectRefraction::sample_function ( const HitResult& p_hitdata, Vecto
 		//	Flip hit point normal
 		surface_normal = surface_normal * -1.0;
 
-		refraction_index = m_index_of_refraction / 1.0;
+		refraction_index = m_index_of_refraction;
 	}
 
 	//	Compute the transmitted vector
