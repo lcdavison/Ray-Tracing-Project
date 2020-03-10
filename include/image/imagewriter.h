@@ -7,6 +7,9 @@
 
 #include "maths/maths.h"
 
+/*
+ *	Provides a standard interface for writing images
+ * */
 class IImageWriter 
 {
 	public:

@@ -9,6 +9,7 @@ class PNGWriter : public IImageWriter
 {
 	public:
 
+		PNGWriter ( );
 		PNGWriter ( unsigned int, unsigned int );
 
 		~PNGWriter ( );
@@ -17,8 +18,8 @@ class PNGWriter : public IImageWriter
 
 	private:
 
-		unsigned int 	m_width;
-		unsigned int 	m_height;
+		unsigned int 	m_width    = 500;
+		unsigned int 	m_height   = 500;
 		FILE*		m_file_ptr = nullptr;
 };
 #endif
