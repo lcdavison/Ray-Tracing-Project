@@ -7,7 +7,7 @@
 #include "material/material.h"
 
 /*
- *	This is used to render an open cylinder
+ * 	Used for rendering a capped cylinder	
  * */
 class Cylinder : public IGeometry 
 {

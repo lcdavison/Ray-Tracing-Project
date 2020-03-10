@@ -1,5 +1,7 @@
 #include "image/pngwriter.h"
 
+PNGWriter::PNGWriter ( ) { }
+
 PNGWriter::PNGWriter ( unsigned int p_width, unsigned int p_height ) : m_width ( p_width ), m_height ( p_height ) 
 { }
 
@@ -62,6 +64,7 @@ bool PNGWriter::write_image ( const std::string& p_filepath, std::vector < Colou
 		}
 	}
 
+	//	Write image to file
 	png_init_io ( png_ptr, m_file_ptr );
 	png_set_rows ( png_ptr, info_ptr, row_ptrs );
 	png_write_png ( png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL );

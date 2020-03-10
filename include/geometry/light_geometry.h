@@ -4,7 +4,7 @@
 #include "sampling/sampler.h"
 
 /*
- *	Provides geometric object with functions for use when representing an area light
+ *	Provides geometric object with utilities for use when representing an area light
  * */
 class ILightGeometry 
 {
