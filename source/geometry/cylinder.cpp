@@ -33,6 +33,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 		return;
 	}
 
+	//	Solve quadratic equation
 	double sqrt 		= std::sqrt ( discriminant );
 	double denominator 	= 2.0 * dir_sqrd;
 
