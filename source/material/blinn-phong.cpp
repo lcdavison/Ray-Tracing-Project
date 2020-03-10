@@ -11,12 +11,12 @@ BlinnPhong::BlinnPhong ( const ColourRGB& p_colour, float p_ambient_coeff, float
 	m_specular_brdf = new BlinnPhongSpecular 	( p_colour, p_specular_coeff, p_specular_exponent );
 
 	if ( m_flags & RT_REFLECTIVE )
-		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 0.1f );
+		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 0.8f );
 
 	if ( m_flags & RT_REFRACTIVE )
 	{
-		m_reflection_brdf = new PerfectReflection ( ColourRGB::WHITE, 0.1f );
-		m_refraction_btdf = new PerfectRefraction ( 1.5f, 0.9f );
+		m_reflection_brdf = new FresnelReflection ( 1.0f, 1.5f );
+		m_refraction_btdf = new FresnelRefraction ( 1.0f, 1.5f );
 	}
 
 	if ( m_flags & RT_GLOSSY )
