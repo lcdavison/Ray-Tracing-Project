@@ -10,10 +10,10 @@ ColourRGB BlinnPhongSpecular::function ( const HitResult& p_hitdata, const Vecto
 	Vector3 halfway = p_incoming + p_outgoing;
 	halfway.normalize ( );
 
-	//	Calculate angle between halfway and ray direction
+	//	Calculate cosine of angle between halfway and ray direction
 	double half_dot_out = dot ( halfway, p_outgoing );
 
-	//	Only reflect light when angle is positive
+	//	Only reflect light when cosine is positive
 	if ( half_dot_out > 0.0 )
 		return m_colour * m_coeff * std::pow ( half_dot_out, m_exponent );
 
