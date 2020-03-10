@@ -24,6 +24,7 @@ class Cylinder : public IGeometry
 	private:
 
 		void 			test_caps ( const Ray&, HitResult& );
+		bool			shadow_test_caps ( const Ray& );
 
 		IMaterial* 		m_material_ptr = nullptr;
 

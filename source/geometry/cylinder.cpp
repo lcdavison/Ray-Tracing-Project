@@ -142,38 +142,7 @@ bool Cylinder::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 	//	Doesn't hit sides of cylinder, so just test caps
 	if ( discriminant < 0.0 )
 	{
-		//	Check top cap
-		double 	half_height 	= m_height * 0.5;
-		Vector3 plane_normal 	= Vector3 ( 0.0, 1.0, 0.0 );
-		Point3 	cap_center 	= Point3 ( m_center.x, m_center.y + half_height, m_center.z );
-		p_distance 		= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
-
-		if ( p_distance > m_EPSILON )
-		{
-			Vector3 center_to_point = p_ray.get_point ( p_distance ) - cap_center;
-
-			if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
-			{
-				return true;
-			}
-		}
-
-		//	Check bottom cap
-		plane_normal 	= Vector3 ( 0.0, -1.0, 0.0 );
-		cap_center 	= Point3 ( m_center.x, m_center.y - half_height, m_center.z );
-		p_distance	= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
-
-		if ( p_distance > m_EPSILON )
-		{
-			Vector3 center_to_point = p_ray.get_point ( p_distance ) - cap_center;
-
-			if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
-			{
-				return true;
-			}
-		}
-
-		return false;
+		return shadow_test_caps ( p_ray );
 	}
 
 	double sqrt 		= std::sqrt ( discriminant );
@@ -196,6 +165,42 @@ bool Cylinder::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 	if ( p_distance > m_EPSILON )
 	{
 		if ( p_ray.get_point ( p_distance ).y >= m_center.y - half_height && p_ray.get_point ( p_distance ).y <= m_center.y + half_height )
+		{
+			return true;
+		}
+	}
+
+	return shadow_test_caps ( p_ray );
+}
+
+bool Cylinder::shadow_test_caps ( const Ray& p_ray )
+{
+	//	Check top cap
+	double 	half_height 	= m_height * 0.5;
+	Vector3 plane_normal 	= Vector3 ( 0.0, 1.0, 0.0 );
+	Point3 	cap_center 	= Point3 ( m_center.x, m_center.y + half_height, m_center.z );
+	double distance 		= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
+
+	if ( distance > m_EPSILON )
+	{
+		Vector3 center_to_point = p_ray.get_point ( distance ) - cap_center;
+
+		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
+		{
+			return true;
+		}
+	}
+
+	//	Check bottom cap
+	plane_normal 	= Vector3 ( 0.0, -1.0, 0.0 );
+	cap_center 	= Point3 ( m_center.x, m_center.y - half_height, m_center.z );
+	distance	= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
+
+	if ( distance > m_EPSILON )
+	{
+		Vector3 center_to_point = p_ray.get_point ( distance ) - cap_center;
+
+		if ( dot ( center_to_point, center_to_point ) < m_radius * m_radius )
 		{
 			return true;
 		}
