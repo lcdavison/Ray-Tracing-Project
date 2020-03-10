@@ -10,7 +10,7 @@ class ICamera
 		virtual void	construct_basis ( const Point3&, const Vector3& ) 	= 0;	//	Construct orthonormal basis
 		virtual Ray 	construct_ray 	( double, double ) 			= 0;	//	Construct a ray to a pixel
 
-		void 		set_vpwidth  	( unsigned int p_width ) { m_viewplane_width = p_width; }
+		void 		set_vpwidth  	( unsigned int p_width )  { m_viewplane_width = p_width; }
 		void 		set_vpheight  	( unsigned int p_height ) { m_viewplane_height = p_height; }
 
 		unsigned int	get_vpwidth  	( ) 	const { return m_viewplane_width; }	//	Get viewplane width
