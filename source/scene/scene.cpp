@@ -57,6 +57,8 @@ void Scene::render ( )
 
 			//	Set colour
 			m_window_ptr->set_pixel ( x, y, pixel_colour );
+
+			m_window_ptr->update ( );
 		}
 
 		m_window_ptr->present ( );
