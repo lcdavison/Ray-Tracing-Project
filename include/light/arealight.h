@@ -6,7 +6,7 @@
 #include "material/emissive.h"
 
 /*
- *	This will be used for more realistic lighting, and soft shadows
+ *	AreaLight is used for producing realistic lighting, and softer shadows
  * */
 class AreaLight : public ILight 
 {

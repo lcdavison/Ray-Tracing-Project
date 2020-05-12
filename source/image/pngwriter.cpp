@@ -2,13 +2,13 @@
 
 PNGWriter::PNGWriter ( ) { }
 
-PNGWriter::PNGWriter ( unsigned int p_width, unsigned int p_height ) : m_width ( p_width ), m_height ( p_height ) 
-{ }
+PNGWriter::PNGWriter ( unsigned int p_width, unsigned int p_height ) : m_width ( p_width ), m_height ( p_height ) { }
 
 PNGWriter::~PNGWriter ( ) { }
 
 bool PNGWriter::write_image ( const std::string& p_filepath, std::vector < ColourRGB >& p_colourbuffer )
 {
+	//	Setup libpng structures
 	png_structp png_ptr 	= nullptr;
 	png_infop   info_ptr 	= nullptr;
 	png_byte**  row_ptrs	= nullptr;

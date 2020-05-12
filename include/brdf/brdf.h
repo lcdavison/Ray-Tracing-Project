@@ -4,8 +4,13 @@
 #include "maths/maths.h"
 #include "geometry/hitresult.h"
 
+//	Forward declaration
 struct HitResult;
 
+/*
+ *	The IBRDF interface provides a common set of functions for all Bi-Directional Reflection Distribution Functions
+ *	implemented.
+ * */
 class IBRDF 
 {
 	public:

@@ -4,6 +4,9 @@
 #include "brdf/brdf.h"
 #include "brdf/sampled_brdf.h"
 
+/*
+ *	IGlossy provides a material with the capabilities for glossy reflections
+ * */
 class IGlossy 
 {
 	public:

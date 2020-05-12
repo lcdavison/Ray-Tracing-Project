@@ -5,6 +5,9 @@
 #include "light_geometry.h"
 #include "material/material.h"
 
+/*
+ *	Used for rendering a flat rectangle
+ * */
 class Rectangle : public IGeometry, public ILightGeometry 
 {
 	public:

@@ -5,8 +5,12 @@
 
 #include "geometry/hitresult.h"
 
+//	Forward declaration
 struct HitResult;
 
+/*
+ *	ILight provides a common set of functions for each type of light
+ * */
 class ILight 
 {
 	public:
@@ -29,7 +33,7 @@ class ILight
 
 	protected:
 
-		bool 			m_shadows = false;
-		unsigned int		m_num_samples = 1.0;
+		bool 			m_shadows     = false;
+		unsigned int		m_num_samples = 1;	//	The number of samples used for area lighting
 };
 #endif

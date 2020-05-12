@@ -23,6 +23,42 @@ Scene::~Scene ( )
 	{
 		delete geometry;
 	}
+
+	//	Clear all lights
+	for ( ILight* light : m_lights )
+	{
+		delete light;
+	}
+
+	if ( m_ambient_light_ptr )
+	{
+		delete m_ambient_light_ptr;
+		m_ambient_light_ptr = nullptr;
+	}
+
+	if ( m_imagewriter_ptr )
+	{
+		delete m_imagewriter_ptr;
+		m_imagewriter_ptr = nullptr;
+	}
+
+	if ( m_tracer_ptr )
+	{
+		delete m_tracer_ptr;
+		m_tracer_ptr = nullptr;
+	}
+
+	if ( m_sampler_ptr )
+	{
+		delete m_sampler_ptr;
+		m_sampler_ptr = nullptr;
+	}
+
+	if ( m_camera_ptr )
+	{
+		delete m_camera_ptr;
+		m_camera_ptr = nullptr;
+	}
 	
 	if ( m_window_ptr )
 	{
@@ -62,8 +98,6 @@ void Scene::render ( )
 		}
 
 		m_window_ptr->present ( );
-
-	//	std::cout << "Finished Row : " << y << std::endl;
 	}
 
 	auto ray_end = std::chrono::high_resolution_clock::now ( );

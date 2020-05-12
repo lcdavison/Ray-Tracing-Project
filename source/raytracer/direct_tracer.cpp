@@ -9,6 +9,7 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 	HitResult closest_result;
 	double min_distance = std::numeric_limits < double >::max ( );
 	
+	//	Calculate closest hit point
 	for ( IGeometry* geometry : m_scene_ptr->get_geometry ( ) )
 	{
 		HitResult hit_data;
@@ -21,6 +22,7 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 		}
 	}
 
+	//	Check if ray hit any geometry
 	if ( closest_result.m_hit )
 	{
 		closest_result.m_hitpoint 		= p_ray.get_point ( closest_result.m_distance );
@@ -31,7 +33,7 @@ ColourRGB DirectTracer::trace_ray ( const Ray& p_ray )
 		return closest_result.m_material_ptr->shade ( closest_result, p_ray );
 	}
 
-	return ColourRGB ( 0.2f, 0.2f, 0.2f );	//	Change this to return a background colour instead
+	return ColourRGB ( 0.4f, 0.4f, 0.4f );	//	Change this to return a background colour instead
 }
 
 ColourRGB DirectTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_depth )

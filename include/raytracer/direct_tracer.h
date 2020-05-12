@@ -6,7 +6,7 @@
 #include "scene/scene.h"
 
 /*
- *	DirectTracer will trace rays for direct illumination only
+ *	DirectTracer traces rays for direct illumination only
  * */
 class DirectTracer : public IRayTracer 
 {

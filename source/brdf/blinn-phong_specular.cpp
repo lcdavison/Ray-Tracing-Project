@@ -1,6 +1,6 @@
 #include "brdf/blinn-phong_specular.h"
 
-BlinnPhongSpecular::BlinnPhongSpecular ( ) { }
+BlinnPhongSpecular::BlinnPhongSpecular ( ) : m_colour ( ColourRGB ( 0.0f, 1.0f, 0.0f ) ), m_coeff ( 0.5f ), m_exponent ( 2.0f ) { }
 
 BlinnPhongSpecular::BlinnPhongSpecular ( const ColourRGB& p_colour, float p_coeff, float p_exponent ) : m_colour ( p_colour ), m_coeff ( p_coeff ), m_exponent ( p_exponent ) { }
 

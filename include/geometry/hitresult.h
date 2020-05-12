@@ -11,7 +11,8 @@
 
 #include "light/light.h"
 
-class IMaterial;	//	Forward declarations
+//	Forward declarations
+class IMaterial;	
 class IGeometry;
 class ILight;
 class IBRDF;

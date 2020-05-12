@@ -7,6 +7,9 @@
 #include "material/refractive.h"
 #include "material/glossy.h"
 
+/*
+ *	AreaLightTracer is a ray tracer primarily designed for use with AreaLights
+ * */
 class AreaLightTracer : public IRayTracer 
 {
 	public:

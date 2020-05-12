@@ -8,8 +8,10 @@ Plane::Plane ( const Point3& p_point, const Vector3& p_normal ) : m_point ( p_po
 
 void Plane::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 {
+	//	Vector from origin to plane point
 	Vector3 origin_to_plane = this->m_point - p_ray.get_origin ( );
 
+	//	Calculate distance along ray
 	double distance = dot ( origin_to_plane, this->m_normal ) / dot ( p_ray.get_direction ( ), this->m_normal );
 
 	if ( distance > m_EPSILON )
@@ -23,8 +25,10 @@ void Plane::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 bool Plane::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 {
+	//	Vector from origin to plane point
 	Vector3 origin_to_plane = this->m_point - p_ray.get_origin ( );
 
+	//	Calculate distance along ray
 	p_distance = dot ( origin_to_plane, this->m_normal ) / dot ( p_ray.get_direction ( ), this->m_normal );
 
 	if ( p_distance > m_EPSILON )

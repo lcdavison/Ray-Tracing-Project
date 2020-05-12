@@ -22,6 +22,9 @@
 
 #include "sampling/sampler.h"
 
+/*
+ *	Scene stores all data required to render the geometry
+ * */
 class Scene 
 {
 	public:

@@ -4,6 +4,7 @@ AreaLight::AreaLight ( ) { }
 
 ColourRGB AreaLight::radiance ( )
 {
+	//	Check whether the light is facing the hit point
 	if ( dot ( m_direction, -1.0 * m_sample_normal ) > 0.0 )
 		return m_material_ptr->get_radiance ( );
 
@@ -14,6 +15,7 @@ bool AreaLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 {
 	Vector3 hitpoint_to_light = m_sample_point - p_hitdata.m_hitpoint;
 
+	//	Check for intersections with geometry
 	for ( IGeometry* geometry : *p_hitdata.m_geometry_ptr )
 	{
 		if ( geometry->casts_shadows ( ) )
@@ -30,9 +32,11 @@ bool AreaLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 
 Vector3	AreaLight::get_direction ( const Point3& p_hitpoint )
 {
-	m_sample_point = m_geometry_ptr->sample ( );
+	//	Get sample point data
+	m_sample_point  = m_geometry_ptr->sample ( );
 	m_sample_normal = m_geometry_ptr->sample_normal ( m_sample_point );
 
+	//	Calculate vector from hitpoint to light sample point
 	m_geometric_vector = m_sample_point - p_hitpoint;
 
 	m_direction = m_geometric_vector;

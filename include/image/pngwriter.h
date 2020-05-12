@@ -5,6 +5,9 @@
 
 #include "imagewriter.h"
 
+/*
+ *	PNGWriter enables the colour buffer to be written to a PNG file
+ * */
 class PNGWriter : public IImageWriter 
 {
 	public:

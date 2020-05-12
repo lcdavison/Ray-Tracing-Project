@@ -24,12 +24,12 @@ class Vector3
 		double 		m_length;
 };
 
+//	Declare operations
 Vector3 operator + ( const Vector3&, const Vector3& );
 Vector3 operator - ( const Vector3&, const Vector3& );
 Vector3 operator * ( const Vector3&, double );
 Vector3 operator * ( double, const Vector3& );
 
-double dot ( const Vector3&, const Vector3& );
+double  dot   ( const Vector3&, const Vector3& );
 Vector3 cross ( const Vector3&, const Vector3& );
-
 #endif

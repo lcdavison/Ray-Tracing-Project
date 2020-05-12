@@ -3,6 +3,10 @@
 
 #include "material.h"
 
+/*
+ *	Emissive material is used for AreaLight sources which emit a constant colour
+ *	across their surface
+ * */
 class Emissive : public IMaterial 
 {
 	public:
@@ -12,9 +16,6 @@ class Emissive : public IMaterial
 
 		ColourRGB 	shade 		( const HitResult&, const Ray& );
 		ColourRGB 	shade_arealight ( const HitResult&, const Ray& );
-
-		IBRDF*		get_diffuse_brdf  ( );
-		IBRDF*		get_specular_brdf ( );
 
 		ColourRGB 	get_radiance ( );
 

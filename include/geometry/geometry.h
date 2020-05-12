@@ -6,6 +6,9 @@
 
 struct HitResult;
 
+/*
+ *	IGeometry provides a common set of functions for creating geometry for rendering
+ * */
 class IGeometry 
 {
 	public:
@@ -14,7 +17,7 @@ class IGeometry
 		virtual bool	shadow_rayhit 	( const Ray&, double& ) = 0;		//	Tests for shadow ray intersection
 
 		void 		set_casts_shadows ( bool p_value ) { m_casts_shadows = p_value; }
-		bool		casts_shadows ( ) { return m_casts_shadows; }
+		bool		casts_shadows 	  ( ) 		   { return m_casts_shadows; }
 
 	protected:
 

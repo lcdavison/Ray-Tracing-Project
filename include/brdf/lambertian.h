@@ -3,6 +3,9 @@
 
 #include "brdf.h"
 
+/*
+ *	The Lambertian BRDF computes light which is perfectly diffuse
+ * */
 class Lambertian : public IBRDF 
 {
 	public:

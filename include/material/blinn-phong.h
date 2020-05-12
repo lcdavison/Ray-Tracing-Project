@@ -15,6 +15,9 @@
 #include "btdf/perfect_refraction.h"
 #include "btdf/fresnel_refraction.h"
 
+/*
+ *	BlinnPhong is a plastic type material using the Blinn-Phong reflection model
+ * */
 class BlinnPhong : public IMaterial, public IReflective, public IRefractive, public IGlossy
 {
 	public:
@@ -26,9 +29,6 @@ class BlinnPhong : public IMaterial, public IReflective, public IRefractive, pub
 
 		ColourRGB 			shade ( const HitResult&, const Ray& );
 		ColourRGB			shade_arealight ( const HitResult&, const Ray& );
-
-		IBRDF*				get_diffuse_brdf  ( );
-		IBRDF*				get_specular_brdf ( );
 
 	private:
 

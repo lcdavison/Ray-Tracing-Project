@@ -3,8 +3,12 @@
 
 #include "light.h"
 
+//	Forward declaration
 struct HitResult;
 
+/*
+ *	Crudely approximates ambient light present in the environment
+ * */
 class AmbientLight : public ILight 
 {
 	public:

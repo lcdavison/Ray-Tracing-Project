@@ -3,6 +3,10 @@
 
 #include "brdf.h"
 
+/*
+ * 	Perfect Reflection computes light which is perfectly reflected off the surface
+ * 	of the object
+ * */
 class PerfectReflection : public IBRDF
 {
 	public:

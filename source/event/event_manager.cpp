@@ -7,11 +7,13 @@ std::queue < RT_EVENT > RTEventManager::m_events;
 
 void RTEventManager::handle_events ( )
 {
+	//	Handle all events in queue
 	while ( !m_events.empty ( ) )
 	{
 		RT_EVENT event = m_events.front ( );
 		m_events.pop ( );
 
+		//	Check event type
 		switch ( event )
 		{
 			case RT_QUIT:

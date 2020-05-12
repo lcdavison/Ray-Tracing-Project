@@ -13,6 +13,9 @@
 
 #include "btdf/perfect_refraction.h"
 
+/*
+ *	Phong is a plastic type material which uses the Phong reflection model
+ * */
 class Phong : public IMaterial, public IReflective, public IRefractive, public IGlossy
 {
 	public:
@@ -25,16 +28,10 @@ class Phong : public IMaterial, public IReflective, public IRefractive, public I
 		ColourRGB 		shade 		( const HitResult&, const Ray& );
 		ColourRGB		shade_arealight ( const HitResult&, const Ray& );
 
-		IBRDF*			get_diffuse_brdf  ( );
-		IBRDF*			get_specular_brdf ( );
-
-	protected:
-
-		Lambertian* 		m_ambient_brdf 		= nullptr;
-		Lambertian* 		m_diffuse_brdf 		= nullptr;
-
 	private:
 
-		PhongSpecular* 		m_specular_brdf 	= nullptr;
+		Lambertian* 		m_ambient_brdf 	= nullptr;
+		Lambertian* 		m_diffuse_brdf 	= nullptr;
+		PhongSpecular* 		m_specular_brdf	= nullptr;
 };
 #endif

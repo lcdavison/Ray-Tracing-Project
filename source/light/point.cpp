@@ -13,6 +13,7 @@ bool PointLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 {
 	double point_dist = ( m_position - p_ray.get_origin ( ) ).length ( );
 
+	//	Check for shadow ray intersections
 	for ( IGeometry* geometry : *p_hitdata.m_geometry_ptr )
 	{
 		double distance;

@@ -3,6 +3,10 @@
 
 #include "btdf.h"
 
+/*
+ *	Fresnel Refraction uses the Fresnel equations to compute the amount of
+ *	light transmitted through an object
+ * */
 class FresnelRefraction : public IBTDF
 {
 	public:
@@ -12,7 +16,7 @@ class FresnelRefraction : public IBTDF
 
 		ColourRGB 	function 		  ( const HitResult&, const Vector3&, const Vector3& );
 		ColourRGB 	sample_function 	  ( const HitResult&, Vector3&, const Vector3& );
-		ColourRGB 	reflectance 		  ( const HitResult&, const Vector3& );
+		ColourRGB 	transmittance 		  ( const HitResult&, const Vector3& );
 
 		bool 		total_internal_reflection ( const HitResult&, const Ray& );
 

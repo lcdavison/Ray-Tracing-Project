@@ -10,8 +10,8 @@ class ISampledBRDF
 {
 	public:
 
-		void 		set_sampler ( ISampler* p_sampler ) { m_sampler_ptr = p_sampler; }
-		float 		get_probability_density_function ( ) { return m_probability_density_function; }
+		void 		set_sampler ( ISampler* p_sampler ) 	{ m_sampler_ptr = p_sampler; }
+		float 		get_probability_density_function ( ) 	{ return m_probability_density_function; }
 
 	protected:
 

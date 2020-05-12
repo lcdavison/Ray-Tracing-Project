@@ -4,7 +4,7 @@
 
 const double Rectangle::m_EPSILON = 0.00001;
 
-Rectangle::Rectangle ( ) { }
+Rectangle::Rectangle ( ) : m_lower_left ( Point3 ( 0.0, 0.0, 0.0 ) ), m_width ( Vector3 ( 10.0, 0.0, 0.0 ) ), m_height ( 0.0, 10.0, 0.0 ) { }
 
 Rectangle::Rectangle ( const Point3& p_lower_left, const Vector3& p_width, const Vector3& p_height ) : m_lower_left ( p_lower_left ), m_width ( p_width ), m_height ( p_height ), m_normal ( cross ( m_width, m_height ) ) 
 {
@@ -30,6 +30,7 @@ void Rectangle::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 		double width_projection = dot ( corner_to_point, width );
 
+		//	Check if point X is within bounds
 		if ( width_projection * width_projection < dot ( m_width, m_width ) )
 		{
 			Vector3 height = m_height;
@@ -37,6 +38,7 @@ void Rectangle::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 			double height_projection = dot ( corner_to_point, height );
 
+			//	Check if point Y is within bounds
 			if ( height_projection * height_projection < dot ( m_height, m_height ) )
 			{
 				p_hitresult.m_hit 		= true;
@@ -50,6 +52,7 @@ void Rectangle::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 bool Rectangle::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 {
+	//	Plane intersection
 	Vector3 origin_to_plane = m_lower_left - p_ray.get_origin ( );
 
 	double distance = dot ( origin_to_plane, m_normal ) / dot ( p_ray.get_direction ( ), m_normal );
@@ -65,6 +68,7 @@ bool Rectangle::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 
 		double width_projection = dot ( corner_to_point, width );
 
+		//	Check if point X is within bounds
 		if ( width_projection * width_projection < dot ( m_width, m_width ) )
 		{
 			Vector3 height = m_height;
@@ -72,6 +76,7 @@ bool Rectangle::shadow_rayhit ( const Ray& p_ray, double& p_distance )
 
 			double height_projection = dot ( corner_to_point, height );
 
+			//	Check if point Y is within bounds
 			if ( height_projection * height_projection < dot ( m_height, m_height ) )
 			{
 				p_distance = distance;

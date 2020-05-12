@@ -3,6 +3,9 @@
 
 #include <algorithm>
 
+/*
+ *	ColourRGB stores colour using the RGB colour format
+ * */
 class ColourRGB 
 {
 	public:
@@ -27,7 +30,7 @@ class ColourRGB
 		float 		m_blue;
 };
 
-//	Define operators for colour
+//	Declare operators for colour
 ColourRGB operator + ( const ColourRGB&, const ColourRGB& );
 ColourRGB operator * ( const ColourRGB&, const ColourRGB& );
 ColourRGB operator * ( const ColourRGB&, float );

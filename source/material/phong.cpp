@@ -55,25 +55,30 @@ Phong::~Phong ( )
 
 ColourRGB Phong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 {
+	//	Reverse ray direction
 	Vector3 outgoing = -1.0 * p_ray.get_direction ( );
 
 	//	Ambient Light
 	ColourRGB radiance = m_ambient_brdf->reflectance ( p_hitdata, outgoing ) * p_hitdata.m_ambient_light_ptr->radiance ( );
 
+	//	Compute incoming radiance
 	for ( ILight* light : *p_hitdata.m_lights_ptr )
 	{
 		double normal_dot_dir = dot ( p_hitdata.m_normal, light->get_direction ( p_hitdata.m_hitpoint ) );
 
+		//	Check if lights effects hit point
 		if ( normal_dot_dir > 0.0 )
 		{
 			bool shadow = false;
 
+			//	Check for shadows
 			if ( light->casts_shadows ( ) )
 			{
 				Ray ray ( p_hitdata.m_hitpoint, light->get_direction ( p_hitdata.m_hitpoint ) );
 				shadow = light->in_shadow ( ray, p_hitdata );
 			}
 
+			//	Only render radiance when not in shadow
 			if ( !shadow )
 			{
 				ColourRGB brdf_sum = m_diffuse_brdf->function  ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), outgoing )
@@ -89,27 +94,32 @@ ColourRGB Phong::shade ( const HitResult& p_hitdata, const Ray& p_ray )
 
 ColourRGB Phong::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray )
 {
+	//	Reverse ray direction
 	Vector3 outgoing = -1.0 * p_ray.get_direction ( );
 
 	//	Ambient Light
 	ColourRGB radiance = m_ambient_brdf->reflectance ( p_hitdata, outgoing ) * p_hitdata.m_ambient_light_ptr->radiance ( );
 
+	//	Compute incoming radiance
 	for ( ILight* light : *p_hitdata.m_lights_ptr )
 	{
 		for ( int i = 0; i < light->get_num_samples ( ); ++i )
 		{
 			double normal_dot_dir = dot ( p_hitdata.m_normal, light->get_direction ( p_hitdata.m_hitpoint ) );
 
+			//	Check if light effects hit point
 			if ( normal_dot_dir > 0.0 )
 			{
 				bool shadow = false;
 
+				//	Check for shadows
 				if ( light->casts_shadows ( ) )
 				{
 					Ray ray ( p_hitdata.m_hitpoint, light->get_direction ( p_hitdata.m_hitpoint ) );
 					shadow = light->in_shadow ( ray, p_hitdata );
 				}
 
+				//	Only render radiance when not in shadow
 				if ( !shadow )
 				{
 					ColourRGB brdf_sum = m_diffuse_brdf->function  ( p_hitdata, light->get_direction ( p_hitdata.m_hitpoint ), outgoing )
@@ -124,14 +134,4 @@ ColourRGB Phong::shade_arealight ( const HitResult& p_hitdata, const Ray& p_ray 
 	}
 
 	return radiance + p_hitdata.m_indirect_radiance;
-}
-
-IBRDF* Phong::get_diffuse_brdf ( )
-{
-	return m_diffuse_brdf;
-}
-
-IBRDF* Phong::get_specular_brdf ( )
-{
-	return m_specular_brdf;
 }

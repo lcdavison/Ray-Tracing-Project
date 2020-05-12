@@ -2,7 +2,7 @@
 
 const double Cylinder::m_EPSILON = 0.00001;
 
-Cylinder::Cylinder ( ) { }
+Cylinder::Cylinder ( ) : m_center ( Point3 ( 0.0, 0.0, 0.0 ) ), m_radius ( 30.0 ), m_height ( 40.0 ) { }
 
 Cylinder::Cylinder ( const Point3& p_center, double p_radius, double p_height ) : m_center ( p_center ), m_radius ( p_radius ), m_height ( p_height ) { }
 
@@ -42,6 +42,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	double distance 	= ( -v_dot_dir - sqrt ) / denominator;
 
+	//	Check close side
 	if ( distance > m_EPSILON && distance < p_hitresult.m_distance )
 	{
 		if ( p_ray.get_point ( distance ).y >= m_center.y - half_height && p_ray.get_point ( distance ).y <= m_center.y + half_height )
@@ -61,6 +62,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 
 	distance = ( -v_dot_dir + sqrt ) / denominator;
 
+	//	Check far side
 	if ( distance > m_EPSILON && distance < p_hitresult.m_distance )
 	{
 		if ( p_ray.get_point ( distance ).y >= m_center.y - half_height && p_ray.get_point ( distance ).y <= m_center.y + half_height )
@@ -78,6 +80,7 @@ void Cylinder::rayhit ( const Ray& p_ray, HitResult& p_hitresult )
 		}
 	}
 
+	//	Check caps
 	HitResult cap_result;
 	cap_result.m_distance = p_hitresult.m_distance;
 	test_caps ( p_ray, cap_result );
@@ -179,7 +182,7 @@ bool Cylinder::shadow_test_caps ( const Ray& p_ray )
 	double 	half_height 	= m_height * 0.5;
 	Vector3 plane_normal 	= Vector3 ( 0.0, 1.0, 0.0 );
 	Point3 	cap_center 	= Point3 ( m_center.x, m_center.y + half_height, m_center.z );
-	double distance 		= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
+	double distance 	= dot ( cap_center - p_ray.get_origin ( ), plane_normal ) / dot ( p_ray.get_direction ( ), plane_normal );
 
 	if ( distance > m_EPSILON )
 	{

@@ -4,6 +4,10 @@
 #include "point3.h"
 #include "vector3.h"
 
+/*
+ *	Ray uses the mathematical definition of a ray for use in geometry intersection 
+ *	tests
+ * */
 class Ray 
 {
 	public:

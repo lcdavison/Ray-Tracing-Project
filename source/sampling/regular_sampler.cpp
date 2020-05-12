@@ -16,6 +16,7 @@ void RegularSampler::generate_samples ( )
 {
 	unsigned int samples_per_dimension = std::sqrt ( m_num_samples );
 
+	//	Generate points in the center of each grid cell
 	for ( int s = 0; s < m_num_sets; ++s )
 	{
 		for ( int y = 0; y < samples_per_dimension; ++y )

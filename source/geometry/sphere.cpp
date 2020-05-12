@@ -2,7 +2,7 @@
 
 const double Sphere::m_EPSILON = 0.00001;
 
-Sphere::Sphere ( ) { }
+Sphere::Sphere ( ) : m_center ( Point3 ( 0.0, 0.0, 0.0 ) ), m_radius ( 30.0 ) { }
 
 Sphere::Sphere ( const Point3& p_center, double p_radius ) : m_center ( p_center ), m_radius ( p_radius ) { }
 

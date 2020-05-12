@@ -20,7 +20,7 @@ class ILightGeometry
 
 	protected:
 
-		ISampler* 	m_sampler_ptr;
+		ISampler* 	m_sampler_ptr = nullptr;
 		double 		m_inverse_area;
 };
 #endif

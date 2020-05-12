@@ -11,6 +11,7 @@ ColourRGB DirectionalLight::radiance ( )
 
 bool DirectionalLight::in_shadow ( const Ray& p_ray, const HitResult& p_hitdata )
 {
+	//	Check for shadow ray intersections
 	for ( IGeometry* geometry : *p_hitdata.m_geometry_ptr )
 	{
 		double distance = 0;

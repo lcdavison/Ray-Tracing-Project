@@ -1,6 +1,6 @@
 #include "brdf/lambertian.h"
 
-Lambertian::Lambertian ( ) { }
+Lambertian::Lambertian ( ) : m_colour ( ColourRGB ( 0.0f, 1.0f, 0.0f ) ), m_coeff ( 1.0f ) { }
 
 Lambertian::Lambertian ( const ColourRGB& p_colour, float p_coeff ) : m_colour ( p_colour ), m_coeff ( p_coeff ) { }
 

@@ -4,6 +4,9 @@
 #include "geometry.h"
 #include "material/material.h"
 
+/*
+ *	Used to render a sphere
+ * */
 class Sphere : public IGeometry 
 {
 	public:

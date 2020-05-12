@@ -3,6 +3,9 @@
 
 #include "sampler.h"
 
+/*
+ *	Implements the Multi-Jittered sampling technique designed by Kenneth Chiu et al.
+ * */
 class MultiJitteredSampler : public ISampler
 {
 	public:

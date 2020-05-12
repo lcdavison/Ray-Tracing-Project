@@ -3,6 +3,10 @@
 
 #include "light.h"
 
+/*
+ *	DirectionalLight simulates an infinitely far light source producing an even
+ *	amount of light from a specific direction
+ * */
 class DirectionalLight : public ILight 
 {
 	public:

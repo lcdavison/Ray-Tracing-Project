@@ -1,6 +1,6 @@
 #include "brdf/fresnel_reflection.h"
 
-FresnelReflection::FresnelReflection ( ) { }
+FresnelReflection::FresnelReflection ( ) : m_exterior_index ( 1.0 ), m_interior_index ( 1.3 ) { }
 
 FresnelReflection::FresnelReflection ( float p_exterior_index, float p_interior_index ) : m_exterior_index ( p_exterior_index ), m_interior_index ( p_interior_index ) { }
 
@@ -28,10 +28,11 @@ ColourRGB FresnelReflection::reflectance ( const HitResult& p_hitdata, const Vec
 
 float FresnelReflection::fresnel_coefficient ( const HitResult& p_hitdata, const Vector3& p_outgoing )
 {
-	Vector3 normal = p_hitdata.m_normal;
-	double incident_cosine = dot ( p_outgoing, normal );
+	Vector3 normal 		= p_hitdata.m_normal;
+	double incident_cosine  = dot ( p_outgoing, normal );
 	double refraction_index = m_exterior_index / m_interior_index;
 
+	//	Check if ray is inside the object
 	if ( incident_cosine < 0.0 )
 	{
 		normal = -1.0 * normal;
@@ -44,8 +45,9 @@ float FresnelReflection::fresnel_coefficient ( const HitResult& p_hitdata, const
 	incident_cosine = dot ( p_outgoing, normal );
 	double transmitted_cosine = std::sqrt ( 1.0 - ( refraction_index * refraction_index ) * ( 1.0 - ( incident_cosine * incident_cosine ) ) );
 
-	double parallel = ( refraction_index * incident_cosine - transmitted_cosine ) / ( refraction_index * incident_cosine + transmitted_cosine );
-	double perpendicular = ( incident_cosine - refraction_index * transmitted_cosine ) / ( incident_cosine + refraction_index * transmitted_cosine );
+	//	Fresnel Equations
+	double parallel 	= ( refraction_index * incident_cosine - transmitted_cosine ) / ( refraction_index * incident_cosine + transmitted_cosine );
+	double perpendicular 	= ( incident_cosine - refraction_index * transmitted_cosine ) / ( incident_cosine + refraction_index * transmitted_cosine );
 
 	return 0.5 * ( parallel * parallel + perpendicular * perpendicular );
 }

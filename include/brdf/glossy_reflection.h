@@ -5,6 +5,10 @@
 #include "sampled_brdf.h"
 #include "sampling/multijittered_sampler.h"
 
+/*
+ *	Glossy Reflection computes light that is reflected and scatters in a cone of
+ *	directions, producing a blurred reflection
+ * */
 class GlossyReflection : public IBRDF, public ISampledBRDF
 {
 	public:

@@ -4,6 +4,9 @@
 #include "geometry.h"
 #include "material/material.h"
 
+/*
+ *	Used for rendering a flat infinite plane
+ * */
 class Plane : public IGeometry
 {
 	public:

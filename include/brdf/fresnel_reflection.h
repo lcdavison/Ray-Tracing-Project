@@ -3,6 +3,9 @@
 
 #include "brdf.h"
 
+/*
+ *	Fresnel Reflection reflects light based on the Fresnel equations
+ * */
 class FresnelReflection : public IBRDF
 {
 	public:

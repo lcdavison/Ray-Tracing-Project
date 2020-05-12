@@ -14,7 +14,7 @@ class IBTDF
 
 		virtual ColourRGB 	function 		  ( const HitResult&, const Vector3&, const Vector3& ) 	= 0;
 		virtual ColourRGB 	sample_function 	  ( const HitResult&, Vector3&, const Vector3& ) 	= 0;
-		virtual ColourRGB 	reflectance 		  ( const HitResult&, const Vector3& ) 			= 0;
+		virtual ColourRGB 	transmittance 		  ( const HitResult&, const Vector3& ) 			= 0;
 		virtual bool 		total_internal_reflection ( const HitResult&, const Ray& ) = 0;				//	Determines whether a ray is transmitted or fully reflected
 };
 #endif

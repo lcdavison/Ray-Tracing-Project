@@ -3,6 +3,9 @@
 
 #include "sampler.h"
 
+/*
+ *	RegularSampler produces sample points regularly distributed in a grid of square cells
+ * */
 class RegularSampler : public ISampler 
 {
 	public:

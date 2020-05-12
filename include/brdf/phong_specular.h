@@ -3,6 +3,9 @@
 
 #include "brdf.h"
 
+/*
+ * 	Implements the Phong reflection model
+ * */
 class PhongSpecular : public IBRDF 
 {
 	public:

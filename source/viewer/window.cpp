@@ -18,15 +18,6 @@ Window::~Window ( )
 void Window::update ( )
 {
 	handle_events ( );
-
-	/*TimePoint now = std::chrono::high_resolution_clock::now ( );
-	auto elapsed = std::chrono::duration_cast < std::chrono::milliseconds > ( now - m_update_timer );
-
-	if ( elapsed.count ( ) >= 1000 )
-	{
-		m_update_timer = std::chrono::high_resolution_clock::now ( );
-		SDL_RenderPresent ( m_prenderer );
-	}*/
 }
 
 void Window::present ( )
@@ -74,12 +65,18 @@ void Window::handle_events ( )
 
 void Window::set_pixel ( unsigned short p_x, unsigned short p_y, ColourRGB& p_colour )
 {
+	//	Save colour in colourbuffer
 	m_colourbuffer.at ( p_y * m_width + p_x ) = p_colour;
 
 	unsigned int colour_int = p_colour.int_format ( );
 
-	unsigned int* pixel = ( unsigned int * ) ( ( unsigned char* ) ( m_surface_ptr->pixels ) + ( ( ( m_height ) - p_y ) * m_surface_ptr->pitch + p_x * m_surface_ptr->format->BytesPerPixel ) );
-	*pixel = ( 255 << 24 ) | colour_int;
+	//	Set pixel colour in window
+	SDL_LockSurface ( m_surface_ptr );
+
+	unsigned int* pixel = ( unsigned int* ) ( ( unsigned char* ) ( m_surface_ptr->pixels ) + ( ( ( m_height - 1 ) - p_y ) * m_surface_ptr->pitch + p_x * m_surface_ptr->format->BytesPerPixel ) );
+	*pixel = ( 255 << 24 ) | colour_int;	//	Alpha | Colour
+
+	SDL_UnlockSurface ( m_surface_ptr );
 }
 
 unsigned short Window::get_width ( )

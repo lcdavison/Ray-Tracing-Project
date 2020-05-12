@@ -38,6 +38,7 @@ unsigned int ColourRGB::int_format ( )
 		m_blue  /= max_value;
 	}
 
+	//	Pack into an integer
 	unsigned int final_colour = 0;
 
 	final_colour |= ( ( unsigned int ) ( m_red * 255 ) ) << 16;

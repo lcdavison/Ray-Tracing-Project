@@ -18,6 +18,7 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 	HitResult closest_result;
 	double min_distance = std::numeric_limits < double >::max ( );
 	
+	//	Test for intersections
 	for ( IGeometry* geometry : m_scene_ptr->get_geometry ( ) )
 	{
 		HitResult hit_data;
@@ -30,8 +31,10 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 		}
 	}
 
+	//	Check if ray hit any geometry
 	if ( closest_result.m_hit )
 	{
+		//	Set hit data
 		closest_result.m_hitpoint 		= p_ray.get_point ( closest_result.m_distance );
 		closest_result.m_ambient_light_ptr 	= m_scene_ptr->get_ambient_light ( );
 		closest_result.m_lights_ptr 		= &( m_scene_ptr->get_lights ( ) );
@@ -40,6 +43,7 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 		ColourRGB reflection;
 		ColourRGB refraction;
 
+		//	Check if material is reflective
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFLECTIVE )
 		{
 			Vector3 direction;
@@ -49,13 +53,14 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 			reflection = trace_ray ( ray, p_depth + 1, p_max_depth ) * brdf;	//	Calculate total radiance of reflection
 		}
 
+		//	Check if material is glossy
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_GLOSSY )
 		{
 			IGlossy* material  	   = dynamic_cast < IGlossy* > ( closest_result.m_material_ptr );
 			ISampledBRDF* brdf_sampler = dynamic_cast < ISampledBRDF* > ( material->get_glossy_brdf ( ) );
 
 			//	Monte Carlo integration
-			for ( int i = 0; i < 100; ++i )
+			for ( int i = 0; i < 20; ++i )
 			{
 				Vector3 direction;
 				ColourRGB brdf = material->get_glossy_brdf ( )->sample_function ( closest_result, direction, -1.0 * p_ray.get_direction ( ) );
@@ -64,9 +69,10 @@ ColourRGB RecursiveTracer::trace_ray ( const Ray p_ray, int p_depth, int p_max_d
 				reflection = reflection + ( trace_ray ( ray, p_depth + 1, p_max_depth ) * brdf * ( 1.0f / brdf_sampler->get_probability_density_function ( ) ) );
 			}
 
-			reflection = reflection * ( 1.0 / 100.0 );
+			reflection = reflection * ( 1.0 / 20.0 );
 		}
 
+		//	Check if material is transmissive
 		if ( closest_result.m_material_ptr->get_flags ( ) & RT_REFRACTIVE )
 		{
 			IRefractive* refract_material = dynamic_cast < IRefractive* > ( closest_result.m_material_ptr );

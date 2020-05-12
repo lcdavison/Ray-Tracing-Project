@@ -3,6 +3,9 @@
 
 #include "btdf/btdf.h"
 
+/*
+ *	IRefractive provides a material with the capabilities for transmitting light
+ * */
 class IRefractive 
 {
 	public:

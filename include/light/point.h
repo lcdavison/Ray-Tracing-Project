@@ -3,6 +3,9 @@
 
 #include "light.h"
 
+/*
+ *	PointLight simulates an infinitely small light source positioned in the environment
+ * */
 class PointLight : public ILight 
 {
 	public:

@@ -3,6 +3,10 @@
 
 #include "maths/maths.h"
 
+/*
+ *	ICamera provides a common set of functions for implementing cameras 
+ *	for ray tracing
+ * */
 class ICamera 
 {
 	public:

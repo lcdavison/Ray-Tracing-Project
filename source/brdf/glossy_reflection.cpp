@@ -1,9 +1,18 @@
 #include "brdf/glossy_reflection.h"
 
-GlossyReflection::GlossyReflection ( ) { }
+GlossyReflection::GlossyReflection ( ) : m_colour ( ColourRGB ( 0.0f, 1.0f, 0.0f ) ), m_coeff ( 1.0f ), m_exponent ( 2.0f ) 
+{
+	//	Setup sampler
+	MultiJitteredSampler* brdf_sampler = new MultiJitteredSampler ( 25, 4 );
+	brdf_sampler->generate_samples ( );
+	brdf_sampler->map_to_hemisphere ( m_exponent );
+
+	m_sampler_ptr = brdf_sampler;
+}
 
 GlossyReflection::GlossyReflection ( const ColourRGB& p_colour, float p_coeff, float p_exponent ) : m_colour ( p_colour ), m_coeff ( p_coeff ), m_exponent ( p_exponent )
 {	
+	//	Setup sampler
 	MultiJitteredSampler* brdf_sampler = new MultiJitteredSampler ( 25, 4 );
 	brdf_sampler->generate_samples ( );
 	brdf_sampler->map_to_hemisphere ( m_exponent );
@@ -18,6 +27,7 @@ ColourRGB GlossyReflection::function ( const HitResult& p_hitresult, const Vecto
 
 ColourRGB GlossyReflection::sample_function ( const HitResult& p_hitresult, Vector3& p_incoming, const Vector3& p_outgoing )
 {
+	//	Compute reflection vector
 	Vector3 reflection_dir = 2.0 * dot ( p_hitresult.m_normal, p_outgoing )	* p_hitresult.m_normal - p_outgoing;
 
 	//	Construct an orthonormal basis around reflection direction
@@ -26,9 +36,10 @@ ColourRGB GlossyReflection::sample_function ( const HitResult& p_hitresult, Vect
 	Vector3 y = cross ( z, x );
 
 	//	Transform direction into tangent space
-	Point3 sample = m_sampler_ptr->sample_hemisphere ( );
-	p_incoming = sample.x * x + sample.y * y + sample.z * z;
+	Point3 sample 	= m_sampler_ptr->sample_hemisphere ( );
+	p_incoming 	= sample.x * x + sample.y * y + sample.z * z;
 
+	//	Test if glossy ray is below the surface of the object
 	if ( dot ( p_hitresult.m_normal, p_incoming ) < 0.0 )
 		p_incoming = -1.0 * sample.x * x - sample.y * y + sample.z * z;
 

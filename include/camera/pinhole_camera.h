@@ -4,7 +4,8 @@
 #include "camera.h"
 
 /*
- *	The pinhole camera is a standard 3D camera which supports arbitrary orientations using an orthonormal basis
+ *	The pinhole camera is a standard 3D camera which supports arbitrary orientations
+ *	using an orthonormal basis
  * */
 class PinholeCamera : public ICamera 
 {
