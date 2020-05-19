@@ -13,6 +13,9 @@ Window::Window ( unsigned short p_width, unsigned short p_height ) : m_width ( p
 Window::~Window ( ) 
 {
 	SDL_DestroyWindow ( m_window_ptr );
+
+	//	Exit SDL
+	SDL_Quit ( );
 }
 
 void Window::update ( )
@@ -27,12 +30,13 @@ void Window::present ( )
 
 void Window::create_window ( )
 {
+	SDL_Init ( SDL_INIT_VIDEO );
+
 	m_window_ptr = SDL_CreateWindow ( "Ray Tracer - Luke Davison", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_width, m_height, 0 );
 
 	if ( !m_window_ptr )
 	{
 		std::cout << "Failed to create window" << std::endl;
-		//	Do something
 	}
 
 	m_surface_ptr = SDL_GetWindowSurface ( m_window_ptr );

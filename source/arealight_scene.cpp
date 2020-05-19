@@ -11,19 +11,16 @@
 
 #include "geometry/sphere.h"
 #include "geometry/plane.h"
-#include "geometry/disk.h"
 #include "geometry/cylinder.h"
 #include "geometry/rectangle.h"
 
 #include "material/matte.h"
-#include "material/phong.h"
 #include "material/blinn-phong.h"
 #include "material/emissive.h"
 
 #include "light/arealight.h"
 
 #include "sampling/sampler.h"
-#include "sampling/regular_sampler.h"
 #include "sampling/multijittered_sampler.h"
 
 bool _running 	= false;
@@ -31,23 +28,27 @@ bool _render 	= false;
 
 int main ( int argc, char** argv )
 {
-	Scene scene ( 500, 500 );
+	//	Setup scene
+	Scene scene ( 1024, 576 );
 
-	MultiJitteredSampler sampler ( 64, 2 );
+	//	Setup multijittered sampler for Anti-Aliasing
+	MultiJitteredSampler sampler ( 25, 2 );
 	sampler.generate_samples ( );
 	scene.set_sampler ( &sampler );
 
+	//	Setup camera
 	PinholeCamera* cam = new PinholeCamera ( Point3 ( 0.0, 80.0, 400.0 ), 150.0 );
 	cam->construct_basis ( Point3 ( 0.0, -5.0, 0.0 ), Vector3 ( 0.0, 1.0, 0.0 ) );
-	cam->set_vpwidth ( 500 );
-	cam->set_vpheight ( 500 );
+	cam->set_vpwidth ( 1024 );
+	cam->set_vpheight ( 576 );
 	scene.set_camera ( cam );
 
+	//	Setup arealight tracer
 	AreaLightTracer* atracer = new AreaLightTracer ( &scene );
 	scene.set_tracer ( atracer );
 
-	//	CYLINDER
-	BlinnPhong* c_mat = new BlinnPhong ( ColourRGB ( 1.0f, 0.0f, 0.0f ), 0.1f, 0.5f, 0.4f, 10.0f, 0 );
+	//	Setup cylinders
+	BlinnPhong* c_mat = new BlinnPhong ( ColourRGB ( 1.0f, 0.0f, 0.0f ), 0.1f, 0.6f, 0.4f, 10.0f, 0 );
 
 	Cylinder* cylinder = new Cylinder ( Point3 ( -100.0, 0.0, -80.0 ), 50.0, 100.0 );
 	cylinder->set_material ( c_mat );
@@ -57,26 +58,28 @@ int main ( int argc, char** argv )
 	cylinder_t->set_material ( c_mat );
 	scene.add_geometry ( cylinder_t );
 
-	//	SPHERE
-	BlinnPhong* s_mat = new BlinnPhong ( ColourRGB ( 0.8f, 0.8f, 0.2f ), 0.0f, 0.0f, 0.0f, 5.0f, RT_REFRACTIVE );
+	//	Setup sphere	
+	BlinnPhong* s_mat = new BlinnPhong ( ColourRGB ( 0.8f, 0.8f, 0.2f ), 0.0f, 0.0f, 0.0f, 5.0f, RT_REFLECTIVE );
 
 	Sphere* sphere = new Sphere ( Point3 ( 40.0, 25.0, 10.0 ), 60.0 );
 	sphere->set_material ( s_mat );
 	scene.add_geometry ( sphere );
 
-	//	PLANE
+	//	Setup plane	
 	Matte* p_mat = new Matte ( ColourRGB ( 0.0f, 0.8f, 0.0f ), 0.3f, 1.0f );
 
 	Plane* plane = new Plane ( Point3 ( 0.0, -50.0, 0.0 ), Vector3 ( 0.0, 1.0, 0.0 ) );
 	plane->set_material ( p_mat );
 	scene.add_geometry ( plane );
 
-	//	Create a light
+	//	Setup arealight
 	Emissive* light_mat = new Emissive ( ColourRGB ( 1.0f, 1.0f, 1.0f ), 80.0f );
 
+	//	Setup light material
 	MultiJitteredSampler* samp = new MultiJitteredSampler ( 25, 4 );
 	samp->generate_samples ( );
 
+	//	Setup light geometry
 	Rectangle* rect = new Rectangle ( Point3 ( 300.0, 160.0, -30.0 ), Vector3 ( 0.0, 0.0, 80.0 ), Vector3 ( 0.0, 80.0, 0.0 ) );
 	rect->set_material ( light_mat );
 	rect->set_sampler ( samp );
