@@ -32,7 +32,7 @@ int main ( int argc, char** argv )
 	Scene scene ( 1024, 576 );
 
 	//	Setup multijittered sampler for Anti-Aliasing
-	MultiJitteredSampler sampler ( 25, 2 );
+	MultiJitteredSampler sampler ( 16, 2 );
 	sampler.generate_samples ( );
 	scene.set_sampler ( &sampler );
 
@@ -89,7 +89,7 @@ int main ( int argc, char** argv )
 	AreaLight* light = new AreaLight ( );
 	light->set_geometry ( rect );
 	light->set_material ( light_mat );
-	light->set_num_samples ( 64 );
+	light->set_num_samples ( 25 );
 	light->set_shadows ( true );
 	scene.add_light ( light );
 
